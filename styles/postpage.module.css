@@ -1,0 +1,7 @@
+.pagecontainer{
+    display: flex;
+    justify-content: center;
+}
+.contentcontainer{
+    width: 75%;
+}

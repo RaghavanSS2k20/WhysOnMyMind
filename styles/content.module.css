@@ -1,0 +1,32 @@
+.contentClass{
+    letter-spacing: 1;
+    font-size: large;
+    font-family:   system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+
+}
+.contentClass h1{
+    font-family:   system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 800;
+    font-size: 10vh;
+    text-align: center;
+}
+.contentClass code{
+   
+    
+}
+.codeblock {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 2%;
+    margin: 1%;
+    display: flex;
+    font-weight: 100;
+  }
+
+  .customblockquote {
+  
+    border-left: 5px solid #252424;
+    padding: '5%';
+    margin: 10px 0;
+  }

@@ -1,0 +1,18 @@
+.skeletoncard {
+    /* Additional custom styles for the card layout (optional) */
+    margin: 8px;
+  }
+  
+  .skeletonheading {
+    /* Additional custom styles for the heading (optional) */
+    margin-bottom: 8px;
+  }
+  
+  .skeletoncontent {
+    /* Additional custom styles for the content (optional) */
+    margin-bottom: 8px;
+  }
+  
+  .skeletonbutton {
+    /* Additional custom styles for the button (optional) */
+  }
