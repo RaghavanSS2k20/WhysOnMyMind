@@ -10,7 +10,11 @@ export default function Posts({ post }) {
     return (
         <>
             <NavBar />
-            <MarkdownWithOverlay markdownContent={post.content} />
+            <div className={contentpagestyles.pagecontainer}>
+                <div className={contentpagestyles.contentcontainer}>
+                    <MarkdownWithOverlay markdownContent={post.content} />
+                </div>
+            </div>
         </>
     );
 }
@@ -24,18 +28,15 @@ export default function Posts({ post }) {
 //     };
 // }
 
-export const getServerSideProps = async ({ context }) => {
-    const id = context.params
-    const post = await getPostById(id); // Correct the function name
+export const getServerSideProps = async (context ) => {
+    const {id} = context.params
+    const {req} = context
+    
+    const post = await getPostById(req,id); // Correct the function name
 
     if (post.status === 401) {
         console.log("please login");
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false // Set to true if you want a permanent redirect (301)
-            }
-        };
+        
     }
     
     return {
