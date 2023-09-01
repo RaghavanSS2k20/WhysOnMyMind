@@ -12,6 +12,7 @@ import MultiSelectExample from "@/components/MultiSelectCategory";
 import EmojiPickerButton from "@/utils/EmojipickerButton";
 import emoji from 'emoji-dictionary'
 import { useRouter } from "next/router";
+import MarkdownWithOverlay from "@/utils/MdWithOverlay";
 import AuthOverlay from "@/components/auth/Auth";
 
  // Import the CSS for emoji-mart
@@ -20,7 +21,7 @@ import AuthOverlay from "@/components/auth/Auth";
 
 import NavBar from "@/components/Navbar";
 
-import { bold, checkedListCommand, code, codeBlock, divider, hr, italic, link, orderedListCommand, quote, title, title3, unorderedListCommand } from "@uiw/react-md-editor/lib/commands";
+import { bold, checkedListCommand, code, codeBlock, codePreview, divider, hr, italic, link, orderedListCommand, quote, title, title3, unorderedListCommand } from "@uiw/react-md-editor/lib/commands";
 
 
 const MDEditor = dynamic(
@@ -40,12 +41,13 @@ function Edit() {
   const [value,setValue]=useState("**Loading...**")
   const [isAuthenticated,setIsAuthenticated] = useState(false)
   const [User, Setuser] = useState(null)
+  const [TittleInput,SetTitileInput] = useState("A Valid name of your work?")
   const [isNewPostNeeded, setIsNewPostNeeded]= useState(true)
   const [SelectedEmoji, setSelectedEmoji]=useState("")
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [isLoading, setItsLoading] = useState(true)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [NewPostId, setNewPostId] = useState('')
+  const [NewPostId, setNewPostId] = useState(null)
   const [mdEditorTextApi, setMdEditorTextApi] = useState(null);
   const [isContentModified, setIsContentModified] = useState(false);
   useEffect(() => {
@@ -64,11 +66,25 @@ function Edit() {
       try {
         const response = await fetch("http://localhost:8088/write",{  credentials: 'include', }); // Fetch from your Express API route
         const data = await response.json();
+        
         if(response.ok){
+          setIsAuthenticated(true);
+          if(data.id){
+            console.log("content available so",data.id)
+            setNewPostId(data.id)
+            const response = await fetch(`http://localhost:8088/api/post/${data.id}`,{  credentials: 'include', })
+            const alreadydata = await response.json()
+            setValue(alreadydata.post.content)
+            setIsNewPostNeeded(false)
+            
+          }
+          else{
         const mdContent = data.content || "**WhysOnMyMind!!**"; // Default content if fetch fails
         setValue(mdContent);
+          }
         setItsLoading(true);
-        setIsAuthenticated(true);
+        
+
         
         }else{
           if(response.status==401){
@@ -90,14 +106,62 @@ function Edit() {
     fetchMDContent(); // Call the function to fetch the MD content
   }, []);
 
-  const handleContentChange = (newValue) => {
+  const handleContentChange = async (newValue) => {
     setValue(newValue);
     setIsContentModified(true);
+   
+    var bostID = NewPostId;
     if(isNewPostNeeded){
       console.log('new post will be created')
+      const response = await fetch("http://localhost:8088/api/post/create",
+      {method:'POST', 
+      headers: {
+          'Content-Type': 'application/json' // Specify the content type
+        },
+        body: JSON.stringify({ content: value }),
+      credentials:'include'}
+      )
+      const data = await response.json()
      
+      if(response.ok){
+        setNewPostId(data.id)
+        console.log("hii")
+        console.log("new post created , ",NewPostId)
+        if(!bostID){
+          console.log('hii')
+          bostID = data.id
+
+        }
+        else{
+          console.log('biisiisiisi')
+          bostID = NewPostId
+        }
+        
+      }
+      else{
+        setValue("Some thing went wrong")
+      }
       setIsNewPostNeeded(false)
     }
+    console.log("bost is ",bostID)
+    
+    const response = await fetch(`http://localhost:8088/api/post/update/content/${bostID}`,{  
+      method:'PATCH',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json' // Specify the content type
+      },
+      body: JSON.stringify({ content: value }) 
+
+     })
+    if(response.ok){
+      console.log("updated")
+    }
+    else{
+      console.log("update failed")
+      setValue("Some thing went wrong")
+    }
+   
       
 
      // Content has been modified
@@ -134,10 +198,29 @@ function Edit() {
   };
   const saveContentToFile = () => {
     const blob = new Blob([value], { type: "text/markdown" });
+    console.log(NewPostId)
     console.log(isContentModified)
     saveAs(blob, "myMarkdownFile.md");
-    setIsContentModified(false); // Reset content modification flag
+     // Reset content modification flag
   };
+  const PostContent = async () =>{
+     const response = await fetch('http://localhost:8088/api/post/submit',{
+      credentials:'include',
+      method:'PATCH',
+      headers: {
+        'Content-Type': 'application/json' // Specify the content type
+      },
+      body: JSON.stringify({ title: TittleInput,
+                              category:'Life Lesson'}) 
+      })
+      if(response.ok){
+        console.log('posted succesfully')
+      }else{
+        console.log(response)
+      }
+  }
+
+  // }
  
   const emojiSupport = text => text.value.replace(/:\w+:/gi, name => emoji.getUnicode(name))
   
@@ -193,6 +276,10 @@ function Edit() {
     icon: <EmojiPickerButton onSelect={(emoji) => mdEditorTextApi?.replaceSelection(emoji)} />,
     execute: () => {}, // No need for execute function here
   }
+  const HandletitleInput = (event)=>{
+    SetTitileInput(event.target.value)
+
+  }
   const customTools = [
     imageInsert,
     title,
@@ -205,6 +292,7 @@ function Edit() {
     hr,
     codeBlock,
     divider,
+   
     orderedListCommand,
     checkedListCommand,
     unorderedListCommand];
@@ -238,6 +326,8 @@ function Edit() {
                   
                     
                   }}
+                  value={TittleInput}
+                  onChange={HandletitleInput}
                   placeholder="A Valid name of your work?"
                   onFocus={(e) => {
                     e.target.style.boxShadow = "0 0 10px white";
@@ -250,12 +340,24 @@ function Edit() {
               <CategoryDropdownWithTags/>
              
               </div>
-              <button className={editStyles.submitbutton} onClick={saveContentToFile}
+              <button className={editStyles.submitbutton} onClick={PostContent}
           disabled={!isContentModified}>Post</button>
         </div>
        
         <div  data-color-mode="light" >  
-          <MDEditor commands={customTools} ref={mdEditorRef} height={'100%'} value={value}   onChange={handleContentChange} style={{ padding: 0, margin:0}} 
+          <MDEditor 
+          commands={customTools}  
+          components={{
+                   preview: (source, state, dispath) => {
+                        return <div><MarkdownWithOverlay markdownContent={value}/></div>
+                      }
+                    }}
+          ref={mdEditorRef} 
+          
+          height={'100%'} 
+          value={value} 
+          onChange={handleContentChange} 
+          style={{ padding: 0, margin:0}} 
           
           />
           
