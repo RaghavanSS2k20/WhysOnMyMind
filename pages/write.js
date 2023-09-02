@@ -12,9 +12,11 @@ import MultiSelectExample from "@/components/MultiSelectCategory";
 import EmojiPickerButton from "@/utils/EmojipickerButton";
 import emoji from 'emoji-dictionary'
 import { useRouter } from "next/router";
+import { SlackSelector } from "@charkour/react-reactions";
+import { GithubSelector } from '@charkour/react-reactions';
 import MarkdownWithOverlay from "@/utils/MdWithOverlay";
 import AuthOverlay from "@/components/auth/Auth";
-
+import { Menu,MenuItem } from "@blueprintjs/core";
  // Import the CSS for emoji-mart
 
 
@@ -38,6 +40,7 @@ const TextAreaTextApi = dynamic(() => import("@uiw/react-md-editor").then((mod) 
 function Edit() {
  
   const mdEditorRef = useRef(null)
+  const emojiRef = useRef('')
   const [value,setValue]=useState("**Loading...**")
   const [isAuthenticated,setIsAuthenticated] = useState(false)
   const [User, Setuser] = useState(null)
@@ -57,7 +60,7 @@ function Edit() {
      
     }
   }, [mdEditorRef]);
-  
+  let em = ''
   const router = useRouter()
   useEffect(() => {
     // Function to fetch the MD file content
@@ -105,7 +108,7 @@ function Edit() {
 
     fetchMDContent(); // Call the function to fetch the MD content
   }, []);
-
+  
   const handleContentChange = async (newValue) => {
     setValue(newValue);
     setIsContentModified(true);
@@ -166,10 +169,24 @@ function Edit() {
 
      // Content has been modified
   };
-  const HandleEmojiPickup=(emojiData)=>{
+  useEffect(() => {
+    // This code will run whenever SelectedEmoji changes
     
-    setSelectedEmoji(emojiData.unified)
-  }
+    em = SelectedEmoji
+    console.log('em value : ',em)
+    // You can perform any actions or updates here that depend on SelectedEmoji
+  }, [SelectedEmoji]);
+
+  const HandleEmojiPickup = (emojiData) => {
+    
+    emojiRef.current = emojiData
+    
+    
+  };
+  const handleButtonClick = () => {
+    setIsPickerOpen(!isPickerOpen);
+  };
+  console.log('em value 2 : ',em)
   const handleImageUpload = (event) => {
     console.log("hiisiiaiiaiiaiiai")
     const file = event.target.files[0];
@@ -269,18 +286,48 @@ function Edit() {
       input.click();
     },
   };
-  const emji = {
-    name: 'emoji',
-    keyCommand: 'emoji',
-    buttonProps: { 'aria-label': 'Insert Emoji' },
-    icon: <EmojiPickerButton onSelect={(emoji) => mdEditorTextApi?.replaceSelection(emoji)} />,
-    execute: () => {}, // No need for execute function here
+  let e = ""
+  const testAddText = {
+    name:'addtext',
+    keyCommand:'addText',
+    buttonProps:{'aria-label':'Testing insertText'},
+    icon: (
+      <div>
+      <button onClick={handleButtonClick}>
+      {isPickerOpen ? (() => {
+  // Function to display when the picker is open
+  emojiRef.current = ""
+  return 'Close Emoji Picker';
+})() : (() => {
+  // Function to display when the picker is closed
+  emojiRef.current = ""
+  return 'Open Emoji Picker';
+})()}
+      </button>
+      {isPickerOpen && (
+        
+        
+          
+        <GithubSelector onSelect={HandleEmojiPickup}/>
+       
+        
+        
+      )}
+    </div>
+    ),
+    execute:(state,api)=>{
+      let modifyText = em
+      api.replaceSelection(emojiRef.current)
+      
+
+    }
   }
   const HandletitleInput = (event)=>{
     SetTitileInput(event.target.value)
 
   }
   const customTools = [
+    testAddText,
     imageInsert,
     title,
     bold,

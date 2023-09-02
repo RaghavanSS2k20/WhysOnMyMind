@@ -1,60 +1,17 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-
-function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-    const router = useRouter()
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:8000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        router.push('/write')
-
-        // Login successful
-        
-      } else {
-        // Login failed
-        console.log('Login failed');
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
+import React from 'react'; // Make sure to import React
+import EmojiPicker from 'emoji-picker-react';
+const EmojiPickerWrapper = () => {
+  // Define the callback function that will be called when an emoji is clicked
+  const onEmojiClick = (emoji) => {
+    console.log('Selected Emoji:', emoji);
   };
 
   return (
     <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+      {/* Render the EmojiPicker component with the onEmojiClick callback */}
+      <EmojiPicker onEmojiClick={onEmojiClick} />
     </div>
   );
-}
+};
 
-export default LoginForm;
+export default EmojiPickerWrapper;
