@@ -5,7 +5,7 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import { Popover, Button, Classes } from '@blueprintjs/core';
 import { Highlight } from '@blueprintjs/icons';
 
-const MarkdownWithOverlay = ({ markdownContent }) => {
+const MarkdownWithOverlay = ({ markdownContent,user }) => {
   const [selectionInfo, setSelectionInfo] = useState(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const containerRef = useRef(null);
@@ -112,6 +112,9 @@ const MarkdownWithOverlay = ({ markdownContent }) => {
   return (
     <div style={{ position: 'static' }}>
       <div onMouseUp={handleSelection} ref={containerRef} className={contentStyle.contentClass} >
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+          <></>
+        </div>
         <ReactMarkdown
             components={{
                 blockquote: ({ node, ...props }) => (
@@ -132,6 +135,7 @@ const MarkdownWithOverlay = ({ markdownContent }) => {
                 
               }}
         >{markdownContent}</ReactMarkdown>
+
       </div>
       {selectionInfo && (
         <div
