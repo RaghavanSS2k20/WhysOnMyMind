@@ -6,11 +6,43 @@ import { Popover, Button, Classes } from '@blueprintjs/core';
 import { Highlight } from '@blueprintjs/icons';
 
 const MarkdownWithOverlay = ({ markdownContent,user }) => {
+  const [selectedTexttwo, setSelectedTexttwo] = useState('');
+  const [popupPositiontwo, setPopupPositiontwo] = useState({});
   const [selectionInfo, setSelectionInfo] = useState(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const containerRef = useRef(null);
   const popoverRef = useRef(null);
+  const handleTextSelection = () => {
+    const text = window.getSelection().toString().trim();
+    if (text) {
+      setSelectedTexttwo(text);
 
+      // Get the position of the selected text (e.g., use the mouse event)
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        setPopupPositiontwo({
+          top: rect.top + window.scrollY - 20, // Adjust the top position as needed
+          left: rect.left + window.scrollX + rect.width / 2 - 100, // Adjust the left position as needed
+        });
+
+        // Open the popover
+        setIsPopoverOpen(true);
+      }
+    } else {
+      setSelectedTexttwo('');
+      // Close the popover when selection is cleared
+      setIsPopoverOpen(false);
+    }
+  };
+
+  const handleMouseDown = () => {
+    setSelectedTexttwo('');
+    // Close the popover when the mouse is clicked outside
+    setIsPopoverOpen(false);
+  };
   const updatePopoverPosition = () => {
     if (selectionInfo) {
       const range = window.getSelection().getRangeAt(0);
@@ -40,7 +72,7 @@ const MarkdownWithOverlay = ({ markdownContent,user }) => {
     if (selectedText) {
       const range = selection.getRangeAt(0);
       const rects = range.getClientRects();
-
+      console.log("rects , ",rects)
       if (rects.length > 0) {
         const lastRect = rects[rects.length - 1];
         const containerRect = containerRef.current.getBoundingClientRect();
@@ -54,6 +86,7 @@ const MarkdownWithOverlay = ({ markdownContent,user }) => {
           text: selectedText,
           position: initialPosition,
         });
+
 
         setIsPopoverOpen(true);
         updatePopoverPosition();
@@ -111,9 +144,12 @@ const MarkdownWithOverlay = ({ markdownContent,user }) => {
 
   return (
     <div style={{ position: 'static' }}>
-      <div onMouseUp={handleSelection} ref={containerRef} className={contentStyle.contentClass} >
+      <div onMouseUp={handleTextSelection}
+        onMouseDown={handleMouseDown}
+        className={contentStyle.contentClass}
+        style={{ position: 'relative' }} >
         <div style={{display:'flex',justifyContent:'space-between'}}>
-          <></>
+        
         </div>
         <ReactMarkdown
             components={{
@@ -135,53 +171,45 @@ const MarkdownWithOverlay = ({ markdownContent,user }) => {
                 
               }}
         >{markdownContent}</ReactMarkdown>
-
+        
       </div>
-      {selectionInfo && (
+      {selectedTexttwo && (
+        <Popover
+            
+        isOpen={isPopoverOpen}
+        position="auto"
+        onClose={() => setIsPopoverOpen(false)}
+      >
         <div
-          ref={popoverRef}
           style={{
+            
             position: 'absolute',
-            top: selectionInfo.position.top,
-            left: selectionInfo.position.left,
-            zIndex: 1,
+            top: popupPositiontwo.top,
+            left: popupPositiontwo.left,
+            backgroundColor: 'rgba(18, 18, 18,0.789797)',
+           
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+            padding: '10px',
+            borderRadius:'5px'
           }}
         >
-          <Popover
-          popoverClassName='bp5-dark'
           
-            content={
-              <div style={{padding:'10%', display:'flex', flexDirection:'row', justifyContent:"space-around",}}>
-                
+             <div style={{ padding: '10%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                 <Button
-                 
-                  
-                  icon={<Highlight size={16}/>}
-                  
-                  style={{padding:'2%', margin:'2%', width:'fit-content'}}
+
+                  icon={<Highlight size={16} color='white' />}
+                  style={{ padding: '2%', margin: '2%', width: 'fit-content', border:'none' , background:'inherit'}}
                   onClick={() => setIsPopoverOpen(false)}
                 />
-                 
-                 <Button
-                    style={{padding:'2%', margin:'2%'}}
-                 
-                  icon={<Highlight size={16}/>}
+                <Button
+                  style={{ padding: '2%', margin: '2%',border:'none' , background:'inherit' }}
+                  icon={<Highlight size={16} color='white' />}
                   onClick={() => setIsPopoverOpen(false)}
                 />
-                
               </div>
-            }
-            interactionKind="click"
-            isOpen={isPopoverOpen}
-            position="auto"
-            onClose={() => {
-              setSelectionInfo(null);
-              setIsPopoverOpen(false);
-            }}
-          >
-            <span></span>
+              </div>
           </Popover>
-        </div>
+        
       )}
     </div>
   );

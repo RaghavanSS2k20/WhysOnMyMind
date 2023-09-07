@@ -293,15 +293,22 @@ function Edit() {
     buttonProps:{'aria-label':'Testing insertText'},
     icon: (
       <div>
-      <button onClick={handleButtonClick}>
+      <button onClick={handleButtonClick}style={{
+    background: 'none',
+    border: 'none',
+    outline: 'none',
+    cursor: 'pointer',
+   
+    color: 'inherit', // Use the text color from the parent element
+  }}>
       {isPickerOpen ? (() => {
   // Function to display when the picker is open
   emojiRef.current = ""
-  return 'Close Emoji Picker';
+  return '❌';
 })() : (() => {
   // Function to display when the picker is closed
   emojiRef.current = ""
-  return 'Open Emoji Picker';
+  return '😊';
 })()}
       </button>
       {isPickerOpen && (
@@ -327,7 +334,7 @@ function Edit() {
 
   }
   const customTools = [
-    testAddText,
+    
     imageInsert,
     title,
     bold,
@@ -342,7 +349,8 @@ function Edit() {
    
     orderedListCommand,
     checkedListCommand,
-    unorderedListCommand];
+    unorderedListCommand,
+    testAddText,];
     
   
 

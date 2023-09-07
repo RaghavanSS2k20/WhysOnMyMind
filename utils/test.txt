@@ -1,0 +1,20 @@
+<ReactMarkdown
+            components={{
+                blockquote: ({ node, ...props }) => (
+                    <blockquote className={contentStyle.customblockquote} {...props} />
+                  ),
+                code: ({ node, inline, className, children, ...props }) => {
+                  if (inline) {
+                    return <code className={className} {...props}>{children}</code>;
+                  } else {
+                    return (
+                      <div className={contentStyle.codeblock}>
+                        <code className={className} {...props}>{children}</code>
+                      </div>
+                    );
+                  }
+                },
+                img:CustomImage
+                
+              }}
+        >{markdownContent}</ReactMarkdown>
