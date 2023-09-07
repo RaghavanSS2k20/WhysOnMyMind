@@ -27,6 +27,8 @@
   .customblockquote {
   
     border-left: 5px solid #252424;
-    padding: '5%';
-    margin: 10px 0;
+  padding: 10px; /* Increase the padding for more space */
+  margin: 10px 0;
+  background-color: rgba(18, 18, 18, 0.0565);
+  border-radius: 5px; /* Add rounded corners */
   }
