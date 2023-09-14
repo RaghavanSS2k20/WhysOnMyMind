@@ -5,7 +5,7 @@ const AllPosts = ({allPosts})=>{
   return (
     <div className={AllPostStyles.posts}>
       {allPosts.map((post) => (
-        <Post key={post._id} post={post}  isPostPinned={post.isPinned}/>
+        <Post key={post._id} post={post}  isPostPinned={post.isPinned} isPostLikedByUser = {post.isLikedByUser}/>
       ))}
     </div>
   );
@@ -30,10 +30,18 @@ export async function getServerSideProps(context) {
   }
     }
   )
+  const likedPostRes = await fetch("http://localhost:8088/api/user/get/liked",{credentials:'include',
+  headers: {
+    Cookie: req.headers.cookie,
+  }
+    })
   
   const userPinnedP = await pinnedPostRes.json();
+  let userLiked = await likedPostRes.json() 
   
   const userPinnedPosts = [...new Set(userPinnedP.pinned)];
+  userLiked = [...new Set(userLiked.post)]
+
  
   if(pinnedPostRes.ok && userPinnedPosts){
   
@@ -43,6 +51,11 @@ export async function getServerSideProps(context) {
       post.isPinned = userPinnedPosts.includes(post._id.trim());
     });
   
+}
+if(likedPostRes.ok && userLiked){
+  allPosts.forEach((post)=>{
+    post.isLikedByUser = userLiked.includes(post._id.trim());
+  })
 }
   }
 

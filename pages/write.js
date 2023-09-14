@@ -231,6 +231,7 @@ function Edit() {
                               category:'Life Lesson'}) 
       })
       if(response.ok){
+        router.push('/posts')
         console.log('posted succesfully')
       }else{
         console.log(response)

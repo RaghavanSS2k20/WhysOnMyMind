@@ -3,16 +3,17 @@ import contentpagestyles from '../../styles/postpage.module.css';
 import NavBar from "@/components/Navbar";
 import { useState } from "react";
 import {user} from "@blueprintjs/icons";
-import { Icon } from "@blueprintjs/core";
+import { Icon, Button } from "@blueprintjs/core";
 import { getAllPostsData } from "@/post/lib/GetAllPost";
  // Correct the import
  import { getPostById } from "@/post/lib/GetPost";
 import { useRouter } from "next/router";
 
 
-export default function Posts({ post,userData, isAuthenticated }) {
+export default function Posts({ post,userData, isAuthenticated, isPostPinned }) {
+    console.log(isPostPinned)
     const router = useRouter()
-    const [isPinned, setIspinned] = useState(false)
+    const [isPinned, setIspinned] = useState(isPostPinned)
     const togglePin = ()=>{
         if(!isPinned){
             console.log("post pinned")
@@ -39,11 +40,10 @@ export default function Posts({ post,userData, isAuthenticated }) {
                                     <span style={{ fontWeight: 700 }}>{userData}</span>
                                 </div>
                                 <div>
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
-                                    <path 
-                                    fill={getFillColor()}
-                                    d="M23.1758 6.47908L17.5383 0.805534C16.478 -0.261432 14.6294 -0.272722 13.5479 0.797066C13.2715 1.07369 13.0543 1.41241 12.9585 1.68479C12.0377 3.60702 11.0492 4.81089 9.78018 5.53349L9.4742 5.68168C8.10926 6.36617 6.25221 7.06337 2.82012 7.06337C2.44505 7.06337 2.08548 7.13676 1.74002 7.27789C1.0507 7.56789 0.502786 8.1173 0.214329 8.80778C-0.0663306 9.4977 -0.0663306 10.2701 0.214329 10.9601C0.360975 11.3115 0.566844 11.6248 0.827705 11.8788L5.38925 16.4445L0 23.9993L7.54664 18.6052L12.0969 23.1596C12.3592 23.4263 12.6694 23.638 13.0219 23.782C13.3636 23.9259 13.7306 24 14.1013 24C14.472 24 14.839 23.9259 15.1807 23.782C15.5232 23.643 15.8343 23.4368 16.0959 23.1755C16.3574 22.9142 16.5641 22.6031 16.7036 22.2606C16.8488 21.919 16.9221 21.545 16.9221 21.1767C16.9221 17.7387 17.6187 15.8814 18.3012 14.5138C19.0006 13.1137 20.2316 12.0468 22.1845 11.1068C22.5666 10.9601 22.9036 10.7455 23.187 10.4619C23.7099 9.93049 24.0021 9.21398 24 8.46815C23.9979 7.72231 23.7017 7.00747 23.1758 6.47908ZM15.7758 13.2549C14.6209 15.5737 14.1006 18.0111 14.0907 21.164L2.82012 9.88603C5.83624 9.88603 8.19809 9.41324 10.4288 8.35615L10.7602 8.20796C12.7328 7.22144 14.2402 5.53631 15.5375 2.79692L21.0705 8.51422C18.4436 9.77454 16.7614 11.2804 15.7758 13.2549Z" fill="black"/>
-                                </svg>
+                                <Button style={{zIndex:100, background:'none',boxShadow:'none'}} onClick={togglePin} icon={<svg width="50px" height="50px" viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" enable-background="new 0 0 76.00 76.00" xmlSpace="preserve">
+	                    <path fill={isPinned ? 'black' : 'white'} fill-opacity="1" stroke="black" stroke-width="2" stroke-linejoin="round" d="M 56.1355,32.5475L 43.4466,19.8526C 42.7886,20.4988 42.298,21.2123 41.9749,21.9932C 41.6519,22.7741 41.4903,23.5729 41.4903,24.3895C 41.4903,25.1942 41.6529,25.987 41.9779,26.7679L 34.0577,34.6821C 33.3918,34.3372 32.6991,34.0776 31.9796,33.9032C 31.2601,33.7288 
+                      30.5298,33.6415 29.7885,33.6415C 28.623,33.6415 27.4953,33.8526 26.4052,34.2748C 25.315,34.697 24.3419,35.3342 23.4856,36.1865L 30.2344,42.9174L 25.9027,47.9032L 22.6532,51.8425L 20.5988,54.5836C 20.1212,55.2892 19.8823,55.753 19.8823,55.975L 19.8645,56.0701L 19.9002,56.088L 19.9002,56.1474L 19.9358,56.1058L 20.0131,56.1236C 20.2351,56.1236 20.6989,55.8888 21.4045,55.419L 24.1457,53.3765L 28.0849,50.1151L 33.0945,45.7775L 39.8016,52.5025C 40.6579,51.6462 41.2961,50.6731 41.7163,49.5829C 42.1365,48.4928 42.3466,47.367 42.3466,46.2056C 42.3466,45.4603 42.2603,44.729 42.0879,44.0115C 41.9155,43.294 41.6548,42.6003 41.3069,41.9304L 49.2202,34.0161C 50.0011,34.3372 50.7939,34.4978 51.5986,34.4978C 52.4192,34.4978 53.2189,34.3362 53.9979,34.0132C 54.7768,33.6901 55.4894,33.2015 56.1355,32.5475 Z "/>
+                  </svg>}/>
                                 </div>
 
                             </div>
@@ -57,7 +57,7 @@ export default function Posts({ post,userData, isAuthenticated }) {
         </>
     );
 }
-
+//we cant use this because we use getServerSideProps
 // export const getStaticPaths = async () => {
 //     const paths = await getAllPostsData();
 
@@ -72,25 +72,32 @@ export const getServerSideProps = async (context ) => {
     const {req} = context
     
     const post = await getPostById(req,id); // Correct the function name
-    
+    let isPinnedByUser = false;
     if (post.status === 401) {
         console.log("please login");
         
     }
+
     const postUserId = post.user;
+    const postID = post._id;
     console.log(postUserId)
-    const response = await fetch(`http://localhost:8088/api/user/${postUserId}`,{credentials:'include', headers: {
+    const response = await fetch(`http://localhost:8088/getuser`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
       }})
     const data = await response.json()
-    
+    console.log(data.user.pinnedPost)
+    if(data.user.pinnedPost.includes(postID.trim())){
+        isPinnedByUser = true
+    }
+    console.log(isPinnedByUser)
     console.log('response status',response.status)
     if(response.status == 200){
     return {
         props: {
             post,
             userData: data.user.email,
-            isAuthenticated:true
+            isAuthenticated:true,
+            isPostPinned:isPinnedByUser
         }
     };}
     else if(response.status == 401){

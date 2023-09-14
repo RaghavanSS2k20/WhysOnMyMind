@@ -1,0 +1,35 @@
+/* styles.css */
+.tabs-container {
+    display: flex;
+    justify-content: center; /* Center-align the tabs horizontally */
+  }
+  
+  /* Style for the selected tab indicator */
+  .bp5-tab-indicator-wrapper {
+    background-color: black; /* Change the indicator color to black */
+  }
+  
+  /* Style for the tab text */
+  .bp5-tab {
+    color: black !important; /* Change the tab text color to black */
+  }
+  
+  /* Optional: Style for the active tab */
+  .bp5-tab.bp5-active {
+    background-color: white; /* Change the background color of the active tab */
+    border-color: black; /* Change the border color of the active tab */
+    color: black !important; /* Change the text color of the active tab */
+  }
+  .posts{
+    max-width: 1400px;
+    margin:0 auto;
+    display: grid;
+    gap :1rem;
+}
+@media (min-width: 700px) {
+    .posts { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 600px) and (max-width:700px) {
+    .posts{ grid-template-columns: repeat(1, 1fr); }
+  }
+  
