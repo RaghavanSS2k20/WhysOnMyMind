@@ -1,4 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+```
 __       __  __                             ______             __       __            __       __  __                  __ 
 |  \  _  |  \|  \                           /      \           |  \     /  \          |  \     /  \|  \                |  \
 | $$ / \ | $$| $$____   __    __   _______ |  $$$$$$\ _______  | $$\   /  $$ __    __ | $$\   /  $$ \$$ _______    ____| $$
@@ -11,7 +12,7 @@ __       __  __                             ______             __       __      
                        |  \__| $$                                           |  \__| $$                                     
                         \$$    $$                                            \$$    $$                                     
                          \$$$$$$                                              \$$$$$$                                      
-
+```
 ## Getting Started
 
 First, run the development server:
