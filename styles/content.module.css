@@ -22,6 +22,8 @@
     margin: 1%;
     display: flex;
     font-weight: 100;
+    overflow: scroll;
+    
   }
 
   .customblockquote {
