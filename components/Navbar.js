@@ -5,6 +5,7 @@ import utilStyle from '../styles/utils.module.css'
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import { useRouter } from "next/router";
+import { PinBoardSVGComponent } from "@/assets/icons/Icons";
 
 const NavBar = ()=>{
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,7 +53,7 @@ const toggleMenu = () => {
     };
     fetchUser()
   },[])
-
+ 
     
     return(
     <Navbar style={{zIndex:100}}>
@@ -67,9 +68,10 @@ const toggleMenu = () => {
             <Popover
       content={
         <Menu>
-          <MenuItem   text={userEmail}className={utilStyle.menuheading}></MenuItem>
+          <MenuItem onClick={()=>{router.push('/profile/me')}}   text={userEmail}className={utilStyle.menuheading}></MenuItem>
           <MenuItem icon="manually-entered-data"  text="write" />
           <MenuItem icon="manual" text="Read" />
+          <MenuItem icon={<PinBoardSVGComponent size="15x"/>} text="Pin Board" />
           <MenuDivider />
           <MenuItem text="logout" icon="log-out" onClick={HandleLogout} className={utilStyle.menusubheading}>
            

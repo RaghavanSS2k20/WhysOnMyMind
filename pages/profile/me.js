@@ -1,11 +1,11 @@
 import Profile from "@/components/Profile"
 import NavBar from "@/components/Navbar"
-export default function Me ({postedPosts, userData}){
+export default function Me ({postedPosts, userData, draftedPosts}){
     
     return(
         <>
         <NavBar/>
-        <Profile postedPosts={postedPosts} userData={userData} isMe={true}/>
+        <Profile draftedPosts={draftedPosts} postedPosts={postedPosts} userData={userData} isMe={true}/>
 
         </>
     )
@@ -41,6 +41,7 @@ export const getServerSideProps = async (context)=>{
   // }
   //   }
   // )
+  console.log("DraftetstaDVH POSOSOOSOOSOOS",draftedPosts)
   
     const userPinnedP = user.pinnedPost
     
@@ -66,7 +67,8 @@ export const getServerSideProps = async (context)=>{
     return {
         props:{
             postedPosts:postedPosts,
-            userData:user
+            userData:user,
+            draftedPosts:draftedPosts
         }
     }
 

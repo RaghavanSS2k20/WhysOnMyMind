@@ -1,12 +1,21 @@
 import Post from "@/components/Post";
 
 import AllPostStyles from '../../styles/allpost.module.css'
-const AllPosts = ({allPosts})=>{
+const AllPosts = ({allPosts, isAuthenticated})=>{
   return (
     <div className={AllPostStyles.posts}>
       {allPosts.map((post) => (
-        <Post key={post._id} post={post}  isPostPinned={post.isPinned} isPostLikedByUser = {post.isLikedByUser}/>
-      ))}
+  isAuthenticated ? (
+    <Post
+      key={post._id}
+      post={post}
+      isPostPinned={post.isPinned}
+      isPostLikedByUser={post.isLikedByUser}
+    />
+  ) : (
+    <Post key={post._id} post={post} />
+  )
+))}
     </div>
   );
 }
@@ -30,6 +39,14 @@ export async function getServerSideProps(context) {
   }
     }
   )
+  if(pinnedPostRes.status === 401){
+    return {
+      props:{
+        allPosts:allPosts,
+        isAuthenticated:true
+      }
+    }
+  }
   const likedPostRes = await fetch("http://localhost:8088/api/user/get/liked",{credentials:'include',
   headers: {
     Cookie: req.headers.cookie,
@@ -63,7 +80,10 @@ if(likedPostRes.ok && userLiked){
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
-    props: {allPosts},
+    props: {
+      allPosts:allPosts,
+      isAuthenticated:true
+    },
   }
 }
 export default AllPosts

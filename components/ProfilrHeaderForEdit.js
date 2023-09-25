@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import { Toast } from "@blueprintjs/core";
+import { useRouter } from "next/router";
 
 const BioinputStyle = {
     fontWeight: '600',
@@ -31,6 +32,7 @@ const BioinputStyle = {
     transition: 'box-shadow 0.3s ease-in-out',
   };
   const ProfileHeaderForEdit = (props)=> {
+    console.log(props.userData)
     const [hovered, setHovered] = useState(false)
     const handleMouseEnter = () => {
         setHovered(true);
@@ -40,10 +42,12 @@ const BioinputStyle = {
         setHovered(false);
       };
       const [profileName, setProfileName]=useState(props.userData.profileName || props.userData.email)
-      const [bio, setBio] = useState(props.userData.bio || "content creator,.. Being hooman")
+      const [bio, setBio] = useState(props.userData.bio || "content creator,uuuu.. Being hooman")
+      const [isToastOpen, setIsToastOpen] = useState(false);
+      const router = useRouter()
       const handleBioInputChange = (event)=>{
         console.log("hooda")
-        setBio(event.target.defaultValue)
+        setBio(event.target.value)
       }
       const handleProfileNameInputChange = (event) =>{
     
@@ -67,6 +71,9 @@ const BioinputStyle = {
         })
         if(response.ok){
             console.log("ok")
+            router.reload()
+        
+            
             
         }
         
@@ -83,12 +90,12 @@ const BioinputStyle = {
                 <input style={inputStyle} id="profile-name" placeholder="pofileNameHere@please" defaultValue={props.profileName} onChange={handleProfileNameInputChange}></input>
   
               ):(
-                <p>{props.userData.email}</p>
+                <p> <input style={inputStyle} id="profile-name" placeholder="pofileNameHere@please" defaultValue={props.email} onChange={handleProfileNameInputChange}></input></p>
   
   
               )
             }
-            <input style={BioinputStyle} id="bio-input" placeholder="Hort bio here ..." onChange={handleBioInputChange} defaultValue="content creator, being human">
+            <input style={BioinputStyle} id="bio-input" placeholder="Hort bio here ..." onChange={handleBioInputChange} defaultValue={bio}>
             </input>         
             
           </div>

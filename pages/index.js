@@ -18,7 +18,7 @@ export default function HomePage(){
                     <div><CleanSVGComponent/></div>
                         <div>Spill your mind</div>
                 </button>
-                <Button icon="manual" text="Read Posts"/>
+                <Button icon="manual" text="Read Posts" onClick={()=>{router.push('/posts')}}/>
             </div>
         </div>
     )

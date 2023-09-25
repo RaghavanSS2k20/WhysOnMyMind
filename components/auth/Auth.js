@@ -62,7 +62,7 @@ const AuthOverlay = (props) =>{
         .then(response => {
             console.log('POST request successful', response.data);
             setIsOpened(false);
-            router.push('/');
+            router.reload();
         })
         .catch(error => {
             console.error('Error making POST request', error);

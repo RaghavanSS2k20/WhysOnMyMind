@@ -53,6 +53,8 @@ function Edit() {
   const [NewPostId, setNewPostId] = useState(null)
   const [mdEditorTextApi, setMdEditorTextApi] = useState(null);
   const [isContentModified, setIsContentModified] = useState(false);
+  const [isAbout, setIsAbout] = useState(false)
+  
   useEffect(() => {
     if (mdEditorRef.current) {
       // The ref is now properly initialized
@@ -77,6 +79,7 @@ function Edit() {
             setNewPostId(data.id)
             const response = await fetch(`http://localhost:8088/api/post/${data.id}`,{  credentials: 'include', })
             const alreadydata = await response.json()
+            if(alreadydata.post.status === 'ABOUT'){setIsAbout(true)}
             setValue(alreadydata.post.content)
             setIsNewPostNeeded(false)
             
@@ -108,7 +111,16 @@ function Edit() {
 
     fetchMDContent(); // Call the function to fetch the MD content
   }, []);
-  
+  const clearSession=async()=>{
+    const uri = process.env.backendUrl+"api/user/clear-session"
+    const response = await fetch(uri,{
+      credentials:'include',
+      method:'DELETE'
+    })
+    if(response.ok){
+      router.push('/profile/me')
+    }
+  }
   const handleContentChange = async (newValue) => {
     setValue(newValue);
     setIsContentModified(true);
@@ -334,6 +346,7 @@ function Edit() {
     SetTitileInput(event.target.value)
 
   }
+  
   const customTools = [
     
     imageInsert,
@@ -396,8 +409,20 @@ function Edit() {
               <CategoryDropdownWithTags/>
              
               </div>
-              <button className={editStyles.submitbutton} onClick={PostContent}
-          disabled={!isContentModified}>Post</button>
+              {isAbout?(
+                <button className={editStyles.submitbutton} onClick={clearSession}
+                disabled={!isContentModified}>
+                  Save About
+                 </button>
+                ):(
+                     
+                       <button className={editStyles.submitbutton} onClick={PostContent}
+                       disabled={!isContentModified}>
+                         Post
+               </button>
+
+          )}
+              
         </div>
        
         <div  data-color-mode="light" >  
@@ -410,7 +435,7 @@ function Edit() {
                     }}
           ref={mdEditorRef} 
           
-          height={'100%'} 
+          
           value={value} 
           onChange={handleContentChange} 
           style={{ padding: 0, margin:0}} 

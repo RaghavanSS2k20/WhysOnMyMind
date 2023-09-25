@@ -7,6 +7,8 @@ import TabGroup from './Tabs';
 import { useState } from 'react';
 import Post from './Post';
 import ProfileHeaderForEdit from './ProfilrHeaderForEdit';
+import NotFound from './DataNotFound';
+import { useRouter } from 'next/router';
 // import 'bootstrap/dist/css/bootstrap.min.css'; // Import the CSS module
 import contentpagestyles from '../styles/postpage.module.css'
 import profilestyles from '../styles/profile.module.css'
@@ -64,7 +66,7 @@ const ProfileHeader = (props)=> (
 
             )
           }
-          <span style={{fontWeight:'600', color:'#747678', fontSize:'40%'}}>Content creator, Being human</span>          
+          <span style={{fontWeight:'600', color:'#747678', fontSize:'40%'}}>{props.userData.bio}</span>          
           
         </div>
         <div>
@@ -101,7 +103,7 @@ const buttonStyle = {
 function Profile(props) {
   const [test, setTest] = useState(true)
   const [hovered, setHovered] = useState(false)
-
+  const router = useRouter()
   const handleMouseEnter = () => {
     setHovered(true);
   };
@@ -117,7 +119,24 @@ function Profile(props) {
     
 
   }
-console.log(profileName)
+  const handleStoryAddClick = async()=>{
+    const uri = process.env.backendUrl+"api/post/about"
+    console.log(uri)
+    const response = await fetch(uri,{
+            credentials:'include',
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+    })
+    if(response.ok){
+      router.push('/write')
+      
+    }else{
+     console.log(response.status)
+    }
+  }
+
   let types = [
     {
       title: 'Post',
@@ -125,11 +144,66 @@ console.log(profileName)
       // content:<p>Chshhshhs</p>,
     },
     {
-      title: 'About',
-      content: <p>Credit Card content goes here.</p>,
+      title: 'Story',
+      content: props.userData.about ?(
+        <Story story={props.userData.about.content}/>
+
+
+      ):(
+        <NotFound/>
+
+      )
     },
     
   ];
+ 
+  let typesForMe = [
+    {
+      title:'Posted Posts',
+      content:<Posts allPosts={props.postedPosts}/>
+    },
+    {
+      title:'Drafts',
+      content:<Posts allPosts={props.draftedPosts}/>
+    },
+    {
+      title:'Story',
+      content: props.userData.about ?(
+        <Story story={props.userData.about.content}/>
+
+
+      ):(
+        <NotFound/>
+
+      )
+    }
+
+  ]
+  let typesforedit = [
+    {
+      title:'Posted Posts',
+      content:<Posts allPosts={props.postedPosts}/>
+    },
+    {
+      title:'Drafts',
+      content:<Posts allPosts={props.draftedPosts}/>
+    },
+    {
+      title:'Story',
+      content: props.userData.about ?(
+        <Story story={props.userData.about.content}/>
+
+
+      ):(
+        <button onClick={handleStoryAddClick}>Own a "your own story"</button>
+
+      )
+    }
+
+  ]
+
+  
+
  
   const handleClick = ()=>{
     setTest(false)
@@ -172,7 +246,24 @@ console.log(profileName)
           <>{test}</>
 
           <div >
-            <TabGroup types={types}/>
+            {
+              props.isMe?(
+                test?(
+                  <TabGroup types={typesForMe}/>
+                 
+
+                ):(
+                
+                <TabGroup types={typesforedit}/>
+                )
+              ):(
+                <TabGroup types={types}/>
+              )
+
+            }
+            
+              
+          
             
         </div>
 

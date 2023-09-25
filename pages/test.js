@@ -2,6 +2,8 @@ import React from 'react';
 import { SlackCounter } from '@charkour/react-reactions';
 
 const Component = () => {
-  return <SlackCounter />;
+  return(
+    <></>
+  )
 };
 export default Component
