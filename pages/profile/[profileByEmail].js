@@ -3,6 +3,37 @@ import NavBar from "@/components/Navbar"
 import { Suspense } from "react"
 import { getUserByEmail, getCurrentUser } from "@/lib/user/GetUser"
 
+export const generateMetadata=async(context)=>{
+  const {profileByEmail} = context.params
+  console.log("llllllllllllllllsssssssssssssss")
+  const email = profileByEmail
+    
+    const {req} = context
+    const user = await getUserByEmail(req,email)
+    console.log("posoosoosoosoosts ", user.user)
+    let isValid = true
+    if(!user){
+      console.log("noaooao")
+      isValid = false
+      return {
+        notFound: true,
+      }
+    }
+    else{
+      const title = user.profileName || user.email;
+     
+      const metaData={
+        title:title
+      }
+      return {
+        title:title
+      }
+        
+      
+      
+    }
+}
+
 const ProfilePage = ({postedPosts, userData})=>{
     return(
         <>
@@ -15,8 +46,10 @@ const ProfilePage = ({postedPosts, userData})=>{
 }
 export default ProfilePage
 
+
 export const getServerSideProps = async (context)=>{
     const {profileByEmail}=context.params
+    
     const email = profileByEmail
     
     const {req} = context
@@ -49,7 +82,14 @@ export const getServerSideProps = async (context)=>{
   //   }
   // )
     const currentUser = await getCurrentUser(req)
-
+    if(!currentUser){
+      return{
+        props:{
+          postedPosts:postedPosts,
+          userData:user.user
+        }
+      }
+    }
     const userPinnedP = currentUser.user.pinnedPost
     
     let userLiked = currentUser.user.likedPost 

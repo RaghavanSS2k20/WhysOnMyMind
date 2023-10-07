@@ -6,3 +6,9 @@
 .contentcontainer{
     width: 75%;
 }
+@media (max-width: 768px) {
+    /* Adjust the width for screens with a maximum width of 768px (typical mobile screens) */
+    .contentcontainer {
+      width: 85%; /* You can adjust this value as needed */
+    }
+  }

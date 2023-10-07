@@ -152,7 +152,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
                 <div style={{display:'flex', justifyContent:'space-between'}}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Icon icon="user" />
-                  <span style={{ fontWeight: 700 }}>Raghavan M</span>
+                  <span style={{ fontWeight: 700 }}>{post.user.profileName ? post.user.profileName : post.user.email}</span>
                 </div>
                 <p>{formatMonthAndYear(post.createdAt)}</p>
                 </div>

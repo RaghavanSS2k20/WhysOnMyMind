@@ -1,0 +1,50 @@
+.posts{
+    max-width: 1400px;
+    
+    
+    margin:0 auto;
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    gap :1rem;
+}
+.container{
+    margin: 0%;
+    padding: 0%;  
+    height: 100vh; 
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+  @media (max-width: 830px) {
+  .posts {
+    grid-template-columns: 1fr;
+    /* background:  repeating-linear-gradient(-45deg, rgba(255,255,255, 0.25), rgba(255,255,255, 0.25) 1px, transparent 1px, transparent 6px); */
+  }
+}
+
+/* For screens between 600px and 700px */
+@media (min-width: 831px) and (max-width: 1285px) {
+  .posts {
+    grid-template-columns: repeat(2, 1fr);
+    /* background:  repeating-linear-gradient(-45deg, rgba(255,255,255, 0.25), rgba(255,255,255, 0.25) 1px, transparent 1px, transparent 6px); */
+  }
+}
+
+/* For screens wider than 700px */
+@media (min-width: 1286px) {
+  .posts {
+    grid-template-columns: repeat(3, 1fr);
+    /* background:  repeating-linear-gradient(-45deg, rgba(255,255,255, 0.25), rgba(255,255,255, 0.25) 1px, transparent 1px, transparent 6px); */
+  }
+}
+.herotext{
+    padding: 2%;
+    font-size: 5vh;
+    display: flex;
+    flex-direction: row;
+
+}

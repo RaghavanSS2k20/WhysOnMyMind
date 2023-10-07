@@ -14,6 +14,20 @@
     font-size: 10vh;
     text-align: center;
 }
+@media (max-width: 768px) {
+  .contentClass h1 {
+      font-size: 8vh; /* Adjust the font size for smaller screens */
+  }
+}
+
+/* Media query for screens smaller than 480px */
+@media (max-width: 480px) {
+  .contentClass h1 {
+      font-size: 5vh;
+      text-align: left;
+      font-weight: 900; /* Adjust the font size for even smaller screens */
+  }
+}
 .contentClass code{
    
     

@@ -1,9 +1,7 @@
-import React from 'react';
-import { SlackCounter } from '@charkour/react-reactions';
-
-const Component = () => {
-  return(
-    <></>
+import WhysOnMyMindLoader from "@/components/WhysOnMyMindLoader";
+const Test = ()=>{
+  return (
+    <WhysOnMyMindLoader/>
   )
-};
-export default Component
+}
+export default Test

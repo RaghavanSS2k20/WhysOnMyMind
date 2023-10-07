@@ -57,11 +57,11 @@ const ProfileHeader = (props)=> (
         <div style={{ fontWeight:800, fontSize:'5vh', display:'flex', flexDirection:'column'}}>
           {
             props.userData.profileName?(
-              <p>{props.userData.profileName}</p>
+              <p style={{ fontSize: '5vh' }}>{props.userData.profileName}</p>
              
 
             ):(
-              <p>{props.userData.email}</p>
+              <p style={{ fontSize: '4vh' }}>{props.userData.email}</p>
 
 
             )

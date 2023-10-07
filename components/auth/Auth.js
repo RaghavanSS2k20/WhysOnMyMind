@@ -14,6 +14,7 @@ const isBrowser = typeof window !== "undefined";
 const AuthOverlay = (props) =>{
     const router = useRouter()
     const [selectedTabId,setSelectedTabID]=useState('login')
+    console.log(props.isOpen)
     const [isOpened, setIsOpened] = useState(props.isOpen)
 
     const HandleLoginSubmit = (props)=>{
@@ -99,6 +100,6 @@ const AuthOverlay = (props) =>{
         </DialogBody>
         <DialogFooter actions={<Button intent="primary" text="Close" onClick={() => router.push('/')} />} />
     </Dialog>
-    ):null
+    ):<p>Hii</p>
 }
 export default AuthOverlay;

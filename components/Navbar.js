@@ -56,9 +56,9 @@ const toggleMenu = () => {
  
     
     return(
-    <Navbar style={{zIndex:100}}>
+    <Navbar style={{zIndex:100,}}>
         <Navbar.Group align={Alignment.LEFT} >
-            <Navbar.Heading className={utilStyle.headingXl}>Why'sOnMyMind</Navbar.Heading>
+            <Navbar.Heading className={utilStyle.headingXl}  style={{fontSize:'3vh'}}onClick={()=>{router.push("/")}}>Why'sOnMyMind</Navbar.Heading>
             <Navbar.Divider />
            
         </Navbar.Group>
@@ -71,7 +71,7 @@ const toggleMenu = () => {
           <MenuItem onClick={()=>{router.push('/profile/me')}}   text={userEmail}className={utilStyle.menuheading}></MenuItem>
           <MenuItem icon="manually-entered-data"  text="write" />
           <MenuItem icon="manual" text="Read" />
-          <MenuItem icon={<PinBoardSVGComponent size="15x"/>} text="Pin Board" />
+          <MenuItem icon={<PinBoardSVGComponent size="15x"/>} text="Pin Board" onClick={()=>{router.push("/pinboard")}} />
           <MenuDivider />
           <MenuItem text="logout" icon="log-out" onClick={HandleLogout} className={utilStyle.menusubheading}>
            

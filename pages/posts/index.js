@@ -1,8 +1,10 @@
 import Post from "@/components/Post";
-
+import NavBar from "@/components/Navbar";
 import AllPostStyles from '../../styles/allpost.module.css'
 const AllPosts = ({allPosts, isAuthenticated})=>{
   return (
+    <>
+    <NavBar/>
     <div className={AllPostStyles.posts}>
       {allPosts.map((post) => (
   isAuthenticated ? (
@@ -17,6 +19,7 @@ const AllPosts = ({allPosts, isAuthenticated})=>{
   )
 ))}
     </div>
+    </>
   );
 }
 export async function getServerSideProps(context) {
@@ -72,6 +75,7 @@ export async function getServerSideProps(context) {
 if(likedPostRes.ok && userLiked){
   allPosts.forEach((post)=>{
     post.isLikedByUser = userLiked.includes(post._id.trim());
+    
   })
 }
   }
