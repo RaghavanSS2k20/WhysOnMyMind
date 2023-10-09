@@ -1,0 +1,6 @@
+.highlight {
+    background-color: rgba(0, 0, 0, 0.1); /* Glassy black color with some transparency */
+    color: black; /* Text color inside the highlight (white in this case) */
+    padding: 2px; /* Optional padding to give some space around the highlighted text */
+    /* You can add more styles as needed, such as border-radius, box-shadow, etc. */
+  }

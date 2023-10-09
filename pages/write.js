@@ -306,7 +306,7 @@ function Edit() {
     buttonProps:{'aria-label':'Testing insertText'},
     icon: (
       <div>
-      <button onClick={handleButtonClick}style={{
+      <div onClick={handleButtonClick}style={{
     background: 'none',
     border: 'none',
     outline: 'none',
@@ -323,7 +323,7 @@ function Edit() {
   emojiRef.current = ""
   return '😊';
 })()}
-      </button>
+      </div>
       {isPickerOpen && (
         
         
@@ -419,7 +419,7 @@ function Edit() {
                        <button className={editStyles.submitbutton} onClick={PostContent}
                        disabled={!isContentModified}>
                          Post
-               </button>
+                       </button>
 
           )}
               
@@ -430,7 +430,7 @@ function Edit() {
           commands={customTools}  
           components={{
                    preview: (source, state, dispath) => {
-                        return <div><MarkdownWithOverlay markdownContent={value}/></div>
+                        return <div><MarkdownWithOverlay markdownContent={value} /></div>
                       }
                     }}
           ref={mdEditorRef} 
@@ -439,13 +439,14 @@ function Edit() {
           value={value} 
           onChange={handleContentChange} 
           style={{ padding: 0, margin:0}} 
+          suppressHydrationWarning={true}
           
           />
           
         </div>
         </div>
   ):( <>
-    <AuthOverlay isOpen={true} />
+    <AuthOverlay isOpen={true}  />
     </>)}
         
        

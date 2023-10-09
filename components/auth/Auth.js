@@ -4,18 +4,24 @@ import AuthForm from "./Form";
 import { useState,useEffect } from "react";
 import axios from 'axios';
 
+
+
+
 const isBrowser = typeof window !== "undefined";
 
 
 
-
-
-
 const AuthOverlay = (props) =>{
+    // let isBrowser
+    // useEffect(() => {
+    //     // This effect will run on the client side after the initial render
+    //      isBrowser = typeof window !== "undefined";
+    //     // This should correctly log 'true' on the client side
+    //   }, []);
     const router = useRouter()
+    console.log(isBrowser);     
     const [selectedTabId,setSelectedTabID]=useState('login')
-    console.log(props.isOpen)
-    const [isOpened, setIsOpened] = useState(props.isOpen)
+     const [isOpened, setIsOpened] = useState(props.isOpen)
 
     const HandleLoginSubmit = (props)=>{
         const url = 'http://localhost:8088/login'
@@ -78,7 +84,7 @@ const AuthOverlay = (props) =>{
            setSelectedTabID('login')
         }
     }
-    
+    console.log(isBrowser)
     return isBrowser?(
     <Dialog  isOpen={isOpened}  >
         <DialogBody>
@@ -100,6 +106,6 @@ const AuthOverlay = (props) =>{
         </DialogBody>
         <DialogFooter actions={<Button intent="primary" text="Close" onClick={() => router.push('/')} />} />
     </Dialog>
-    ):<p>Hii</p>
+    ):<></>
 }
 export default AuthOverlay;

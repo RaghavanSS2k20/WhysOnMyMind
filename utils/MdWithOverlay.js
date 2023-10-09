@@ -1,10 +1,21 @@
-  import React, { useState, useRef, useEffect } from 'react';
+  import React, { useState, useRef, useEffect , useCallback} from 'react';
+  import rangy from 'rangy';
+  import "rangy/lib/rangy-classapplier";
+import "rangy/lib/rangy-highlighter";
   import ReactMarkdown from 'react-markdown';
   import contentStyle from '../styles/content.module.css'
+  import highStyles from "../styles/highlight.module.css"
   import '@blueprintjs/core/lib/css/blueprint.css';
   import { Popover, Button, Classes } from '@blueprintjs/core';
   import { Highlight } from '@blueprintjs/icons';
   import { handle_highlight_preserve } from './HandleHighlightPreserve';
+  function init(){
+    console.log("ramgy called")
+    try{
+    rangy.init()
+    console.log(rangy)
+    }catch(e){console.log(e)}
+  }
   function wrapTextWithHighlight(selection) {
     if (!selection || selection.isCollapsed) {
       return; // No text selected or empty selection
@@ -57,6 +68,8 @@
       }
     });
   }
+  
+  
   const MarkdownWithOverlay = ({ markdownContent,user }) => {
     const [highlightedText,setHighlightedText] = useState('')
     const [selectedTexttwo, setSelectedTexttwo] = useState('');
@@ -65,6 +78,45 @@
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const containerRef = useRef(null);
     const popoverRef = useRef(null);
+    const highlighterRef = useRef(null)
+    useEffect(()=>{
+        init();
+        const highlighter = rangy.createHighlighter();
+        highlighter.addClassApplier(
+          rangy.createClassApplier(highStyles.highlight, {
+            ignoreWhiteSpace: true,
+            elementTagName: "mark",
+            tagNames: ["mark"]
+          })
+        );
+        highlighterRef.current = highlighter;
+    },[])
+    const handleSaveHighlight = useCallback(() => {
+      const highlighter =  highlighterRef.current
+      
+      // highlighter.addClassApplier(
+      //   rangy.createClassApplier(highStyles.highlight, {
+      //     ignoreWhiteSpace: true,
+      //     elementTagName: "mark",
+      //     tagNames: ["mark"]
+      //   })
+      // );
+  
+      highlighter.highlightSelection(highStyles.highlight);
+  
+      console.log("highlighter.highlights", highlighter.highlights);
+      console.log(
+        "highlighter.highlights[0].getHighlightElements()",
+        highlighter.highlights[0].getHighlightElements()
+      );
+      console.log(
+        "highlighter.highlights :: getText",
+        highlighter.highlights.map((h) => h.getText())
+      );
+      const serialized = highlighter.serialize();
+      console.log("serrrr", serialized);
+      console.log("test", highlighter.deserialize(serialized));
+    }, []);
     const handleTextSelection = () => {
       const text = window.getSelection().toString().trim();
       if (text) {
@@ -255,6 +307,7 @@
           
           </div>
           <ReactMarkdown
+          suppressHydrationWarning
               components={{
                   blockquote: ({ node, ...props }) => (
                       <blockquote className={contentStyle.customblockquote} {...props} />
@@ -304,7 +357,7 @@
 
                     icon={<Highlight size={16} color='white' />}
                     style={{ padding: '2%', margin: '2%', width: 'fit-content', border:'none' , background:'inherit'}}
-                    onClick={() => {handleHighlight();setIsPopoverOpen(false)}}
+                    onClick={() => {handleSaveHighlight();setIsPopoverOpen(false)}}
                   />
                   <Button
                     style={{ padding: '2%', margin: '2%',border:'none' , background:'inherit' }}

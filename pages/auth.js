@@ -1,20 +1,28 @@
 import AuthOverlay from "@/components/auth/Auth";
 import editStyles from "../styles/Edit.module.css"
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 const Auth = (props)=>{
-    const router = useRouter()
-    if(props.isLoggedIn){
-            console.log("hukum NextJS ka hukum")
-            router.back()
-    }
-    else{
-        return(
-            <div className={editStyles.container}>
-            <AuthOverlay isOpen={true}/>
-            </div>
+   
+    const router = useRouter();
 
-        )
+  useEffect(() => {
+    // This effect will run on the client side after the initial render
+    if (props.isLoggedIn) {
+      console.log("hukum NextJS ka hukum");
+      router.back();
     }
+  }, [props.isLoggedIn]);
+
+  if (!props.isLoggedIn) {
+    return (
+      <div className={editStyles.container}>
+        <AuthOverlay isOpen={true} />
+      </div>
+    );
+  }
+
+  return null; // If logged in, return null or some other content
     
 }
 export default Auth

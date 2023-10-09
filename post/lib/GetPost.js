@@ -17,7 +17,8 @@ export async function  getPostById(req,id){
         
         if(response.ok){
             const postData = await response.json()
-            const post = postData.post
+            const post = postData
+            console.log(post)
             return post
         }
         else{

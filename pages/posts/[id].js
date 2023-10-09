@@ -118,7 +118,11 @@ export const getServerSideProps = async (context ) => {
     const {id} = context.params
     const {req} = context
     
-    const post = await getPostById(req,id); // Correct the function name
+    const p = await getPostById(req,id);
+    let post 
+    if(p.isAuthenticated){
+        post = p.post.post
+     }else{post = p.post} // Correct the function name
     let isPinnedByUser = false;
     if (post.status === 401) {
         console.log("please login");
@@ -161,7 +165,8 @@ export const getServerSideProps = async (context ) => {
             post,
             userData: userData,
             isAuthenticated:true,
-            isPostPinned:isPinnedByUser
+            isPostPinned:isPinnedByUser,
+            highlightedData : p.post.userHighlighted
         }
     };}
     else if(response.status == 401){
@@ -171,7 +176,7 @@ export const getServerSideProps = async (context ) => {
                 permanent: false, // Set to true if it's a permanent redirection
             },
         }
-    }
 
+       }
 }
 
