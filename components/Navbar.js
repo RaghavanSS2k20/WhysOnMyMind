@@ -66,28 +66,28 @@ const toggleMenu = () => {
         <Navbar.Group align={Alignment.RIGHT}>
             <Navbar.Divider />
             <Popover
-      content={
-        <Menu>
-          <MenuItem onClick={()=>{router.push('/profile/me')}}   text={userEmail}className={utilStyle.menuheading}></MenuItem>
-          <MenuItem icon="manually-entered-data"  text="write" />
-          <MenuItem icon="manual" text="Read" />
-          <MenuItem icon={<PinBoardSVGComponent size="15x"/>} text="Pin Board" onClick={()=>{router.push("/pinboard")}} />
-          <MenuDivider />
-          <MenuItem text="logout" icon="log-out" onClick={HandleLogout} className={utilStyle.menusubheading}>
-           
-          </MenuItem>
-        </Menu>
-      }
-      isOpen={isMenuOpen}
-      onClose={() => setIsMenuOpen(false)}
-      position="bottom-right"
-    >
-      <Button className="bp5-minimal" icon="user" onClick={toggleMenu} />
-    </Popover>
-            
+                content={
+                  <Menu>
+                    <MenuItem onClick={()=>{router.push('/profile/me')}}   text={userEmail}className={utilStyle.menuheading}></MenuItem>
+                    <MenuItem icon="manually-entered-data"  text="write" />
+                    <MenuItem icon="manual" text="Read" />
+                    <MenuItem icon={<PinBoardSVGComponent size="15x"/>} text="Pin Board" onClick={()=>{router.push("/pinboard")}} />
+                    <MenuDivider />
+                    <MenuItem text="logout" icon="log-out" onClick={HandleLogout} className={utilStyle.menusubheading}>
+                    
+                    </MenuItem>
+                  </Menu>
+                }
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+                position="bottom-right"
+            >
+            <Button className="bp5-minimal" icon="user" onClick={toggleMenu} />
+          </Popover>
+                      
 
-        </Navbar.Group>
-    </Navbar>
+                  </Navbar.Group>
+              </Navbar>
     )
 }
 export default NavBar

@@ -32,7 +32,7 @@ export default function HighlightDemo() {
     };
   }, []);
 
-  const handleSaveHighlight = useCallback(() => {
+  const handleSaveHighlight = useCallback(async() => {
     const highlighter =  highlighterRef.current
     
     // highlighter.addClassApplier(
@@ -42,7 +42,9 @@ export default function HighlightDemo() {
     //     tagNames: ["mark"]
     //   })
     // );
-
+    const response = await fetch("http://localhost:8088/write",{  credentials: 'include', }); // Fetch from your Express API route
+    const data = await response.json();
+    
     highlighter.highlightSelection(highStyles.highlight);
 
     console.log("highlighter.highlights", highlighter.highlights);

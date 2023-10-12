@@ -71,13 +71,14 @@ function Edit() {
       try {
         const response = await fetch("http://localhost:8088/write",{  credentials: 'include', }); // Fetch from your Express API route
         const data = await response.json();
+        console.log(data)
         
         if(response.ok){
           setIsAuthenticated(true);
           if(data.id){
             console.log("content available so",data.id)
             setNewPostId(data.id)
-            const response = await fetch(`http://localhost:8088/api/post/${data.id}`,{  credentials: 'include', })
+            const response = await fetch(`http://localhost:8088/api/post/${data.id}`,{  credentials:'include', })
             const alreadydata = await response.json()
             if(alreadydata.post.status === 'ABOUT'){setIsAbout(true)}
             setValue(alreadydata.post.content)

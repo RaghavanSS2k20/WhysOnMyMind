@@ -70,7 +70,8 @@ import "rangy/lib/rangy-highlighter";
   }
   
   
-  const MarkdownWithOverlay = ({ markdownContent,user }) => {
+  const MarkdownWithOverlay = ({ markdownContent,user,postId, highlights }) => {
+    
     const [highlightedText,setHighlightedText] = useState('')
     const [selectedTexttwo, setSelectedTexttwo] = useState('');
     const [popupPositiontwo, setPopupPositiontwo] = useState({});
@@ -78,7 +79,9 @@ import "rangy/lib/rangy-highlighter";
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const containerRef = useRef(null);
     const popoverRef = useRef(null);
-    const highlighterRef = useRef(null)
+    const highlighterRef = useRef(null);
+  
+    const serializedHighlightedDataRef = useRef(highlights?.highlightedText ?? "")
     useEffect(()=>{
         init();
         const highlighter = rangy.createHighlighter();
@@ -90,8 +93,15 @@ import "rangy/lib/rangy-highlighter";
           })
         );
         highlighterRef.current = highlighter;
+        console.log("hehehhehhehhehhehhehhehheh",highlights)
+        if(serializedHighlightedDataRef.current){
+        highlighter.deserialize(serializedHighlightedDataRef.current )}
     },[])
-    const handleSaveHighlight = useCallback(() => {
+
+
+
+
+    const handleSaveHighlight = useCallback(async () => {
       const highlighter =  highlighterRef.current
       
       // highlighter.addClassApplier(
@@ -115,7 +125,31 @@ import "rangy/lib/rangy-highlighter";
       );
       const serialized = highlighter.serialize();
       console.log("serrrr", serialized);
-      console.log("test", highlighter.deserialize(serialized));
+      console.log("post id ", postId)
+      serializedHighlightedDataRef.current = serialized
+      try{
+        console.log(postId)
+        const uri = process.env.backendUrl+`api/post/update/highlight/${postId}`
+
+        const response = await fetch(uri,{
+          credentials:'include',
+          method:'PATCH',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ highlightedText:serializedHighlightedDataRef.current })
+          
+
+        })
+        if(response.ok){
+          console.log("backend succes")
+        }
+
+
+      
+
+      }catch(e){}
+      console.log("test", serializedHighlightedDataRef.current);
     }, []);
     const handleTextSelection = () => {
       const text = window.getSelection().toString().trim();

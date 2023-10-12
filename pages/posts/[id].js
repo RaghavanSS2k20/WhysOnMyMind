@@ -10,9 +10,9 @@ import { getAllPostsData } from "@/post/lib/GetAllPost";
 import { useRouter } from "next/router";
 
 
-export default function Posts({ post,userData, isAuthenticated, isPostPinned }) {
+export default function Posts({ post,userData, isAuthenticated, isPostPinned, highlightedData }) {
     // console.log(userData.user.profileName)
-    
+    console.log("highhhhhhhhhhhhhhhhulllllllllllliiiiiiiiii ", highlightedData)
     const router = useRouter()
     const [isPinned, setIspinned] = useState(isPostPinned)
     const togglePin = ()=>{
@@ -56,7 +56,7 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned }) 
 
                             </div>
                             <Divider/>
-                            <MarkdownWithOverlay markdownContent={post.content} />
+                            <MarkdownWithOverlay markdownContent={post.content} postId={post._id} highlights={highlightedData} />
                         </div>
                     </>
                 ) : (
@@ -157,7 +157,7 @@ export const getServerSideProps = async (context ) => {
     if(data.user.pinnedPost.includes(postID.trim())){
         isPinnedByUser = true
     }
-    console.log(isPinnedByUser)
+    console.log( p.post.userHighlighted[0])
     console.log('response status',response.status)
     if(response.status == 200){
     return {
@@ -166,7 +166,7 @@ export const getServerSideProps = async (context ) => {
             userData: userData,
             isAuthenticated:true,
             isPostPinned:isPinnedByUser,
-            highlightedData : p.post.userHighlighted
+            highlightedData : p.post.userHighlighted[0] || null
         }
     };}
     else if(response.status == 401){
