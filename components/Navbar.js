@@ -65,7 +65,7 @@ const toggleMenu = () => {
 
         <Navbar.Group align={Alignment.RIGHT}>
             <Navbar.Divider />
-            <Popover
+            {userEmail?(<Popover
                 content={
                   <Menu>
                     <MenuItem onClick={()=>{router.push('/profile/me')}}   text={userEmail}className={utilStyle.menuheading}></MenuItem>
@@ -83,7 +83,11 @@ const toggleMenu = () => {
                 position="bottom-right"
             >
             <Button className="bp5-minimal" icon="user" onClick={toggleMenu} />
-          </Popover>
+          </Popover>):(
+             <Button className="bp5-minimal" text="LOGIN" onClick={()=>{router.push("/auth")}}/>
+
+          )}
+            
                       
 
                   </Navbar.Group>

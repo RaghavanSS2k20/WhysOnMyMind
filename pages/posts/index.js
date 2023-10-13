@@ -1,9 +1,14 @@
 import Post from "@/components/Post";
 import NavBar from "@/components/Navbar";
+import { NextSeo } from "next-seo";
 import AllPostStyles from '../../styles/allpost.module.css'
 const AllPosts = ({allPosts, isAuthenticated})=>{
   return (
     <>
+     <NextSeo
+            title="Read @WhyOnM"
+            description="Explore the 'WhysOnMyMind' blog on WhyOnM.com to discover a world of intriguing thoughts and ideas. Engaging posts on a wide range of topics that answer the question, 'Why should it be on my mind while it can be here?' await your curiosity. Join our community and let inspiration take center stage."
+        />
     <NavBar/>
     <div className={AllPostStyles.posts}>
       {allPosts.map((post) => (

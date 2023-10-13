@@ -8,12 +8,14 @@ import { getAllPostsData } from "@/post/lib/GetAllPost";
  // Correct the import
  import { getPostById } from "@/post/lib/GetPost";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 
 
 export default function Posts({ post,userData, isAuthenticated, isPostPinned, highlightedData }) {
     // console.log(userData.user.profileName)
     console.log("highhhhhhhhhhhhhhhhulllllllllllliiiiiiiiii ", highlightedData)
     const router = useRouter()
+    
     const [isPinned, setIspinned] = useState(isPostPinned)
     const togglePin = ()=>{
         if(!isPinned){
@@ -28,7 +30,12 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
     return isPinned ? 'black' : 'none';
   };
     return (
+
         <>
+        <NextSeo
+            title={post.title || "Read Post"}
+            description={post.description}
+        />
             <NavBar />
             <div className={contentpagestyles.pagecontainer}>
             {isAuthenticated ? (
