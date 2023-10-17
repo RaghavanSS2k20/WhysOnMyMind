@@ -143,7 +143,7 @@ export const getServerSideProps = async (context ) => {
         Cookie: req.headers.cookie,
       }})
     const userData = await userDetailsResponse.json()
-    console.log("Deii helooo ",userData)
+   
    
     const response = await fetch(`https://whyonm-api.onrender.com/getuser`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
@@ -166,7 +166,7 @@ export const getServerSideProps = async (context ) => {
         isPinnedByUser = true
     }
     console.log( p.post.userHighlighted[0])
-    console.log('response status',response.status)
+    console.log('response status',data)
     if(response.status == 200){
     return {
         props: {
