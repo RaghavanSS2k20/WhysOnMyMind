@@ -33,14 +33,14 @@ export async function getServerSideProps(context) {
   // console.log("cookies , ", req.headers.cookie)
   
   // Fetch your posts data
-  const res = await fetch('http://localhost:8088/api/post/',{
+  const res = await fetch('https://whyonm-api.onrender.com/api/post/',{
     credentials:'include'})
  
   const posts = await res.json()
  
   const allPosts = posts.posts
   if(req){
-  const pinnedPostRes = await fetch(`http://localhost:8088/api/user/get/pinnedposts`,
+  const pinnedPostRes = await fetch(`https://whyonm-api.onrender.com/api/user/get/pinnedposts`,
   {credentials:'include',
   headers: {
     Cookie: req.headers.cookie,
@@ -55,7 +55,7 @@ export async function getServerSideProps(context) {
       }
     }
   }
-  const likedPostRes = await fetch("http://localhost:8088/api/user/get/liked",{credentials:'include',
+  const likedPostRes = await fetch("https://whyonm-api.onrender.com/api/user/get/liked",{credentials:'include',
   headers: {
     Cookie: req.headers.cookie,
   }

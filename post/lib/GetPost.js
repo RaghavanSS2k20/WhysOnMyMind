@@ -4,7 +4,7 @@ export async function  getPostById(req,id){
     
     console.log(id)
     try{
-        const response = await fetch(`http://localhost:8088/api/post/${id}`,{ credentials:'include', headers: {
+        const response = await fetch(`https://whyonm-api.onrender.com/api/post/${id}`,{ credentials:'include', headers: {
             Cookie: req.headers.cookie,
           },})
         

@@ -316,7 +316,7 @@ import "rangy/lib/rangy-highlighter";
       }
     
       return (
-        <div style={divStyle}>
+        <span style={divStyle}>
       
         <img
           className={contentStyle.customImage} // Define your custom image style class here
@@ -325,7 +325,7 @@ import "rangy/lib/rangy-highlighter";
           style={imageStyle}
           {...props}
         />
-        </div>
+        </span>
       );
     };
 

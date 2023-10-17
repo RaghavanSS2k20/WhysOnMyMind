@@ -3,7 +3,7 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import PostStyles from '../styles/allpost.module.css'
 import Pin from '../assets/icons/Vector.svg'
 import ReactMarkdown from 'react-markdown';
-import ContentImage from '../assets/Images/ContentImage.png'
+import ContentImage from '../assets/Images/contentImage.png'
  import Image from "next/image";
  import { useState,useEffect } from "react";
  import { useRouter } from "next/router";
@@ -44,7 +44,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
         console.log("post pinned")
           setIspinned(true)
         try{
-            const response  = await fetch("http://localhost:8088/api/user/pinpost",{
+            const response  = await fetch("https://whyonm-api.onrender.com/api/user/pinpost",{
                 credentials:'include'
                 ,method:'PATCH',
                 headers: {
@@ -64,7 +64,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
           console.log("post unpinned")
           setIspinned(false)
           try{
-            const response  = await fetch("http://localhost:8088/api/user/unpinpost",{
+            const response  = await fetch("https://whyonm-api.onrender.com/api/user/unpinpost",{
                 credentials:'include'
                 ,method:'PATCH',
                 headers: {
@@ -90,7 +90,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
       setIsLiked(true)
       console.log('post is liked')
       try{
-        const response  = await fetch("http://localhost:8088/api/user/like",{
+        const response  = await fetch("https://whyonm-api.onrender.com/api/user/like",{
             credentials:'include'
             ,method:'PATCH',
             headers: {
@@ -109,7 +109,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
       console.log("post unlikded")
       setIsLiked(false)
       try{
-        const response  = await fetch("http://localhost:8088/api/user/unlike",{
+        const response  = await fetch("https://whyonm-api.onrender.com/api/user/unlike",{
             credentials:'include'
             ,method:'PATCH',
             headers: {

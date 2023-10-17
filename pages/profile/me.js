@@ -12,7 +12,7 @@ export default function Me ({postedPosts, userData, draftedPosts}){
 }
 export const getServerSideProps = async (context)=>{
     const {req} = context
-    const response = await fetch('http://localhost:8088/api/user/get/current',{ credentials:'include', headers: {
+    const response = await fetch('https://whyonm-api.onrender.com/api/user/get/current',{ credentials:'include', headers: {
         Cookie: req.headers.cookie,
       },})
       if(!response.ok){
@@ -34,7 +34,7 @@ export const getServerSideProps = async (context)=>{
         draftedPosts=userPosts.filter(post=>post.status==="DRAFT")
 
     }
-  //   const pinnedPostRes = await fetch(`http://localhost:8088/api/user/get/pinnedposts`,
+  //   const pinnedPostRes = await fetch(`https://whyonm-api.onrender.com/api/user/get/pinnedposts`,
   // {credentials:'include',
   // headers: {
   //   Cookie: req.headers.cookie,
@@ -44,10 +44,12 @@ export const getServerSideProps = async (context)=>{
   console.log("DraftetstaDVH POSOSOOSOOSOOS",draftedPosts)
   
     const userPinnedP = user.pinnedPost
+
     
     let userLiked = user.likedPost 
     
     const userPinnedPosts = [...new Set(userPinnedP)];
+    console.log(userPinnedPosts)
     userLiked = [...new Set(userLiked)]
     if(userPinnedPosts){
   

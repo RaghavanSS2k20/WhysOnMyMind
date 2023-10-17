@@ -12,7 +12,7 @@ export default function HomePage(){
     return(
         <>
         <NextSeo
-            title="WhysOnM - Where Ideas Find Expression."
+            title="WhyOnM - Where Ideas Find Expression."
             description="WhyOnM.com: A Place to Share Your Thoughts. Don't carry the burden of your ideas alone. Join us, express your 'Whys,' and connect with others. It's where ideas come to life and curiosity speaks."
         />
         <div className={LandingPageStyles.container}>

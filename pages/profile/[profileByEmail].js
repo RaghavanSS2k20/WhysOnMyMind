@@ -74,7 +74,7 @@ export const getServerSideProps = async (context)=>{
         draftedPosts=userPosts.filter(post=>post.status==="DRAFT")
 
     }
-  //   const pinnedPostRes = await fetch(`http://localhost:8088/api/user/get/pinnedposts`,
+  //   const pinnedPostRes = await fetch(`https://whyonm-api.onrender.com/api/user/get/pinnedposts`,
   // {credentials:'include',
   // headers: {
   //   Cookie: req.headers.cookie,

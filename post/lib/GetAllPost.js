@@ -3,7 +3,7 @@
 
 export async function getAllPostsData(){
     try{
-    const postContent = await fetch('http://localhost:8088/api/post/',{credentials:'include'})
+    const postContent = await fetch('https://whyonm-api.onrender.com/api/post/',{credentials:'include'})
     const data = await postContent.json()
     const posts = data.posts;
    return posts.map((post)=>{

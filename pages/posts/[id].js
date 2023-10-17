@@ -104,7 +104,7 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
                             </div>
                         <Divider/>
 
-                            <MarkdownWithOverlay markdownContent={post.content} />
+                            <MarkdownWithOverlay markdownContent={post.content} postId = {post._id}/>
                     </div>
                 )}
             </div>
@@ -139,17 +139,18 @@ export const getServerSideProps = async (context ) => {
     const postUserId = post.user;
     const postID = post._id;
     console.log(postUserId)
-    const userDetailsResponse = await fetch(`http://localhost:8088/api/user/${postUserId}`,{credentials:'include', headers: {
+    const userDetailsResponse = await fetch(`https://whyonm-api.onrender.com/api/user/${postUserId}`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
       }})
     const userData = await userDetailsResponse.json()
     console.log(userData)
    
-    const response = await fetch(`http://localhost:8088/getuser`,{credentials:'include', headers: {
+    const response = await fetch(`https://whyonm-api.onrender.com/getuser`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
       }})
-      console.log("response s s code s s ",response.status)
+      console.log("response s s code s s ",req.headers.cookie)
       if (response.status === 401){
+        console.log("Ppppppppppsssssssssssssssssssttttttttttttttttt  ",post._id)
         return{
             props:{
                 post,

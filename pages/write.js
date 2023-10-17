@@ -69,7 +69,7 @@ function Edit() {
     const fetchMDContent = async () => {
       console.log(isAuthenticated)
       try {
-        const response = await fetch("http://localhost:8088/write",{  credentials: 'include', }); // Fetch from your Express API route
+        const response = await fetch("https://whyonm-api.onrender.com/write",{  credentials: 'include', }); // Fetch from your Express API route
         const data = await response.json();
         console.log(data)
         
@@ -78,10 +78,13 @@ function Edit() {
           if(data.id){
             console.log("content available so",data.id)
             setNewPostId(data.id)
-            const response = await fetch(`http://localhost:8088/api/post/${data.id}`,{  credentials:'include', })
+            const response = await fetch(`https://whyonm-api.onrender.com/api/post/${data.id}`,{  credentials:'include', })
+            console.log(response.status)
+          
             const alreadydata = await response.json()
+            console.log("alrready data , ",alreadydata.post.post.content)
             if(alreadydata.post.status === 'ABOUT'){setIsAbout(true)}
-            setValue(alreadydata.post.content)
+            setValue(alreadydata.post.post.content)
             setIsNewPostNeeded(false)
             
           }
@@ -129,7 +132,7 @@ function Edit() {
     var bostID = NewPostId;
     if(isNewPostNeeded){
       console.log('new post will be created')
-      const response = await fetch("http://localhost:8088/api/post/create",
+      const response = await fetch("https://whyonm-api.onrender.com/api/post/create",
       {method:'POST', 
       headers: {
           'Content-Type': 'application/json' // Specify the content type
@@ -161,7 +164,7 @@ function Edit() {
     }
     console.log("bost is ",bostID)
     
-    const response = await fetch(`http://localhost:8088/api/post/update/content/${bostID}`,{  
+    const response = await fetch(`https://whyonm-api.onrender.com/api/post/update/content/${bostID}`,{  
       method:'PATCH',
       credentials: 'include',
       headers: {
@@ -234,7 +237,7 @@ function Edit() {
      // Reset content modification flag
   };
   const PostContent = async () =>{
-     const response = await fetch('http://localhost:8088/api/post/submit',{
+     const response = await fetch('https://whyonm-api.onrender.com/api/post/submit',{
       credentials:'include',
       method:'PATCH',
       headers: {

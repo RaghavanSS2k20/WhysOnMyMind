@@ -16,7 +16,7 @@ const toggleMenu = () => {
   };
   const HandleLogout= async ()=>{
     try{
-      const response = await fetch("http://localhost:8088/logout",{
+      const response = await fetch("https://whyonm-api.onrender.com/logout",{
         credentials:'include',
         method:'DELETE'
       });
@@ -38,10 +38,10 @@ const toggleMenu = () => {
   useEffect(()=>{
     const fetchUser = async ()=>{
       try{
-        const resposne = await fetch("http://localhost:8088/getuser",{credentials:'include'});
+        const resposne = await fetch("https://whyonm-api.onrender.com/getuser",{credentials:'include'});
         const data = await resposne.json()
         if(data){
-          console.log(data.user)
+          console.log("dddddddddddadaaaaaaaaaaaaaaaaaatttttttttttttttttttttttttttttttttaaaaaaaaaaaaaaaaaaaaaaaaaaaa",data.user)
           SetuserEmail(data.user.email)
 
         }
@@ -59,6 +59,7 @@ const toggleMenu = () => {
     <Navbar style={{zIndex:100,}}>
         <Navbar.Group align={Alignment.LEFT} >
             <Navbar.Heading className={utilStyle.headingXl}  style={{fontSize:'3vh'}}onClick={()=>{router.push("/")}}>Why'sOnMyMind</Navbar.Heading>
+            
             <Navbar.Divider />
            
         </Navbar.Group>
