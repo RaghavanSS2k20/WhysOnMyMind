@@ -143,7 +143,7 @@ export const getServerSideProps = async (context ) => {
         Cookie: req.headers.cookie,
       }})
     const userData = await userDetailsResponse.json()
-    console.log(userData)
+    console.log("Deii helooo ",userData)
    
     const response = await fetch(`https://whyonm-api.onrender.com/getuser`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
