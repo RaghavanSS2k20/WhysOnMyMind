@@ -13,7 +13,7 @@ import { NextSeo } from "next-seo";
 
 export default function Posts({ post,userData, isAuthenticated, isPostPinned, highlightedData }) {
     // console.log(userData.user.profileName)
-    console.log("highhhhhhhhhhhhhhhhulllllllllllliiiiiiiiii ", highlightedData)
+    console.log("highhhhhhhhhhhhhhhhulllllllllllliiiiiiiiii ", userData)
     const router = useRouter()
     
     const [isPinned, setIspinned] = useState(isPostPinned)
