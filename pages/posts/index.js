@@ -1,6 +1,8 @@
 import Post from "@/components/Post";
 import NavBar from "@/components/Navbar";
 import { NextSeo } from "next-seo";
+// import testCookie from "@/components/auth/CookieTest";
+
 import AllPostStyles from '../../styles/allpost.module.css'
 const AllPosts = ({allPosts, isAuthenticated})=>{
   return (
@@ -30,7 +32,7 @@ const AllPosts = ({allPosts, isAuthenticated})=>{
 export async function getServerSideProps(context) {
   
   const {req} = context
-  console.log("cookies here are ", req.cookies)
+  console.log("cookies here are ",req.cookies)
   
   // Fetch your posts data
   const res = await fetch('https://whyonm-api.onrender.com/api/post/',{
