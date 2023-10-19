@@ -32,7 +32,7 @@ const AllPosts = ({allPosts, isAuthenticated})=>{
 export async function getServerSideProps(context) {
   
   const {req} = context
-  console.log("cookies here are ",req.cookies)
+  console.log("cookies here are ",req)
   
   // Fetch your posts data
   const res = await fetch('https://whyonm-api.onrender.com/api/post/',{
