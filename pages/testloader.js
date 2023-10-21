@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const [user, setUser] = useState(null)
+const [user, setUser] = useState("")
 const testAuth = ()=>{
   useEffect(()=>{
     const getuser =  async ()=>{
@@ -8,7 +8,7 @@ const testAuth = ()=>{
     try{
       const resposne = await fetch("https://whyonm-api.onrender.com/getuser",{credentials:'include'});
       const data  = await resposne.json()
-      setUser(data.user)
+      setUser(data.user.email)
       
      
 
