@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-const [user, setUser] = useState("")
+
 const testAuth = ()=>{
+  const [user, setUser] = useState('')
   useEffect(()=>{
     const getuser =  async ()=>{
         
@@ -8,7 +9,7 @@ const testAuth = ()=>{
     try{
       const resposne = await fetch("https://whyonm-api.onrender.com/getuser",{credentials:'include'});
       const data  = await resposne.json()
-      setUser(data.user.email)
+      setUser(data.user.email || "poda punda")
       
      
 
@@ -22,3 +23,4 @@ const testAuth = ()=>{
     <>{user}</>
   )
 }
+export default testAuth
