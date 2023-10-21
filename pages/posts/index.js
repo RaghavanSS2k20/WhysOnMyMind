@@ -1,8 +1,9 @@
 import Post from "@/components/Post";
 import NavBar from "@/components/Navbar";
 import { NextSeo } from "next-seo";
-// import testCookie from "@/components/auth/CookieTest";
 
+// import testCookie from "@/components/auth/CookieTest";
+// import {cookies} from 'next/headers'
 import AllPostStyles from '../../styles/allpost.module.css'
 const AllPosts = ({allPosts, isAuthenticated})=>{
   return (
