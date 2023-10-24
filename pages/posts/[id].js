@@ -9,7 +9,7 @@ import { getAllPostsData } from "@/post/lib/GetAllPost";
  import { getPostById } from "@/post/lib/GetPost";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
-
+import Cookies from "cookies";
 
 export default function Posts({ post,userData, isAuthenticated, isPostPinned, highlightedData }) {
     // console.log(userData.user.profileName)
@@ -124,7 +124,9 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
 export const getServerSideProps = async (context ) => {
     const {id} = context.params
     const {req} = context
-    
+    const {res} = context
+    const cookies = new Cookies(req,res)
+   console.log("cookies are this da ",cookies.get('connect.sid')) 
     const p = await getPostById(req,id);
     let post 
     if(p.isAuthenticated){
