@@ -126,7 +126,7 @@ export const getServerSideProps = async (context ) => {
     const {req} = context
     const {res} = context
     const cookies = new Cookies(req,res)
-   console.log("cookies are this da ",cookies.get('connect.sid')) 
+   
     const p = await getPostById(req,id);
     let post 
     if(p.isAuthenticated){
