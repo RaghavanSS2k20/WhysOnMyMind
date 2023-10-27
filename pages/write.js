@@ -17,6 +17,7 @@ import { GithubSelector } from '@charkour/react-reactions';
 import MarkdownWithOverlay from "@/utils/MdWithOverlay";
 import AuthOverlay from "@/components/auth/Auth";
 import { Menu,MenuItem } from "@blueprintjs/core";
+import { NextSeo } from "next-seo";
  // Import the CSS for emoji-mart
 
 
@@ -376,6 +377,10 @@ function Edit() {
 
   return (
     <div className={editStyles.container}>
+       <NextSeo
+            title="Spill your mind"
+            description="Ready to tell your story? Dive into the world of blogging on our  page and Craft compelling stories and ideas that resonate with a global audience"
+        />
 
 
        <NavBar/>

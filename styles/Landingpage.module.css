@@ -11,9 +11,20 @@
 }
 .herotext{
     padding: 2%;
-    font-size: 5vh;
-    display: flex;
-    flex-direction: row;
+    font-size: 15vh;
+    font-weight: 900;
+
+}
+.content{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 2%;
+
+}
+.subherotext{
+  font-size: 5vh;
+
 
 }
 @media  screen and (max-width:768px) {
