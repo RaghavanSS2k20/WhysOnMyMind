@@ -41,7 +41,7 @@ const toggleMenu = () => {
         const resposne = await fetch("https://whyonm-api.onrender.com/getuser",{credentials:'include'});
         const data = await resposne.json()
         if(data){
-          console.log("dddddddddddadaaaaaaaaaaaaaaaaaatttttttttttttttttttttttttttttttttaaaaaaaaaaaaaaaaaaaaaaaaaaaa",data.user)
+         // console.log("dddddddddddadaaaaaaaaaaaaaaaaaatttttttttttttttttttttttttttttttttaaaaaaaaaaaaaaaaaaaaaaaaaaaa",data.user)
           SetuserEmail(data.user.email)
 
         }

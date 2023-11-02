@@ -1,65 +1,25 @@
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import MdToHTML from "@/utils/MdtoHTML";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { getAllPostsData } from "@/post/lib/GetAllPost";
-import contentpagestyles from '../../styles/postpage.module.css'
-import OverlayButton from "@/utils/OverLayButton";
-import MarkdownWithOverlay from "@/utils/MdWithOverlay";
-import ContentSkeletonCard from "@/components/skeletons/ContenteSkeleton";
-import NavBar from "@/components/Navbar";
-import MultiSelectExample from "@/components/MultiSelectCategory";
-const Markdown = dynamic(
-    () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
-    { ssr: false }
-  );
-
-
-
-
-    
-
-
-
+import { useState } from "react";
+const testCookies = ({ckies})=>{
+  const [cookies, setCookies] = useState(ckies.cookies)
+ 
   
-
-const test2Content = ()=>{
-    
-
-    const [content,setContent] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    useEffect(()=>{
-
-        const fetchContent = async ()=>{
-            const cntt = await getAllPostsData()
-            setContent(cntt)
-            setIsLoading(false);
-            console.log(cntt)
-        }
-        fetchContent()
-        
-
-    },[])
-
-
-  
-
-return(
-    <>
-    <NavBar/>
-    <div className={contentpagestyles.pagecontainer}>
-        <div className={contentpagestyles.contentcontainer}>
-        
-      {isLoading ? (
-        <ContentSkeletonCard/>
-
-      ):
-      (
-        <MarkdownWithOverlay markdownContent={content} />)}
-      </div>
-    </div>
-    </>
-)
-    
-};
-export default test2Content
+  return(
+    <h1>{cookies?cookies:'please wait'}</h1>
+  )
+}
+export async function getServerSideProps(context){
+  const {req} = context
+  const res = await fetch('https://whyonm-api.onrender.com/api/cookies',{
+    credentials:'include',
+    headers:{
+      Cookie: req.headers.cookie,
+    }
+  })
+  const cokies = await res.json()
+  return{
+    props:{
+      ckies:cokies.cookies
+    }
+  }
+}
+export default testCookies

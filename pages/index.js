@@ -32,9 +32,9 @@ export default function HomePage(){
                         <p><span style={{fontWeight:'bold'}}>WhyIsItOnMyMind</span> While it can be here?</p>
                     </div>
                     <div className={LandingPageStyles.buttonRow}> {/* Updated className to LandingPageStyles.buttonRow */}
-      <Button className={LandingPageStyles.blackButton} style={{backgroundColor:'black', color:'white'}} icon="manual">Read Posts</Button> {/* Updated className to LandingPageStyles.blackButton */}
-      <Button className={LandingPageStyles.borderButton} icon="clean">Spill your mind</Button> {/* Updated className to LandingPageStyles.borderButton */}
-    </div>
+                        <Button onClick={()=>{router.push('/posts')}} className={LandingPageStyles.blackButton} style={{backgroundColor:'black', color:'white'}} icon="manual">Read Posts</Button> {/* Updated className to LandingPageStyles.blackButton */}
+                        <Button onClick={()=>{router.push('/write')}} className={LandingPageStyles.borderButton} icon="clean">Spill your mind</Button> {/* Updated className to LandingPageStyles.borderButton */}
+                    </div>
                 </div>
                 
 
