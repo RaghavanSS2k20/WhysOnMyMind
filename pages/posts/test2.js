@@ -10,16 +10,17 @@ const testCookies = ()=>{
       // }
     })
     const cokies = await res.json()
-    console.log(cokies.cookies)
+    console.log(cokies)
     setCookies(cokies.cookies)
   }
 petch()
   },[])
+
   
 
   
   return(
-    <h1>{cookies?cookies:'please wait'}</h1>
+    <h1>{cookies?"sunni":'please wait'}</h1>
   )
 }
 // export async function getServerSideProps(context){
