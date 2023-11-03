@@ -5,7 +5,7 @@ import { getUserByEmail, getCurrentUser } from "@/lib/user/GetUser"
 
 export const generateMetadata=async(context)=>{
   const {profileByEmail} = context.params
-  console.log("llllllllllllllllsssssssssssssss")
+  console.log("llllllllllllllllsssssssssssssss ", context.req)
   const email = profileByEmail
     
     const {req} = context
