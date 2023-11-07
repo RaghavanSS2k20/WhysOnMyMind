@@ -6,8 +6,9 @@ import MarkdownWithOverlay from "@/utils/MdWithOverlay"
 import contentpagestyles from "../../../styles/postpage.module.css"
 import { Icon, Button, Divider , Tooltip, Classes} from "@blueprintjs/core";
 import { NextSeo } from "next-seo";
-export default async function Posts({ post,id,  userData}){
+export default function Posts({ post,id,  userData}){
     const router = useRouter()
+    
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [highlights, setHighlights] = useState('')
     const [isPinned, setIspinned] = useState(false)
@@ -22,21 +23,26 @@ export default async function Posts({ post,id,  userData}){
     }
     useEffect(()=>{
         const buckleUp = async ()=>{
-            const uri = process.env.backendUri+`api/post/get/highlight/${id}`;
+           console.log("The requested post id is : ", id)
+            const uri = process.env.backendUrl+`api/post/get/highlight/${id.trim()}`;
+            console.log(uri)
             const highlightedDataResponse = await fetch(uri,{credentials:'include'});
             
             
-            const isPinnedresponse = await fetch(process.env.backendUri+`api/post/ispinned/${id}`,{
+            const isPinnedresponse = await fetch(process.env.backendUrl+`api/post/ispinned/${id}`,{
                 credentials:'include'
             })
             if(highlightedDataResponse.status === 401){
                 setIsAuthenticated(false)
 
             }else{
+            console.log("response status for highlighted fetch : ", highlightedDataResponse.status)
             const highlightedData = await highlightedDataResponse.json()
-            setHighlights(highlightedData.highlights)
+            console.log(highlightedData.highlights[0].highlightedText)
+            setHighlights(highlightedData.highlights[0])
             const pinnedIs = await isPinnedresponse.json()
-            setIspinned(pinnedIs)
+            console.log("IIIIIIISSSSSSSSSSSSSSSSSSSSSSSS PPPPPPPPPPPPPPPPPPIIIIIIISSSSSSSSSSSSMNNn",pinnedIs.isPinned)
+            setIspinned(pinnedIs.isPinned)
             setIsAuthenticated(true)
             }
 
@@ -45,10 +51,12 @@ export default async function Posts({ post,id,  userData}){
 
         }
         buckleUp();
+        console.log("podfool its running from useEffect")
     
 
 
     },[id])
+    
     return(
         <>
         <NextSeo
@@ -63,9 +71,9 @@ export default async function Posts({ post,id,  userData}){
                         
                         <div className={contentpagestyles.contentcontainer}>
                             <div style={{ padding: '2%', display:'flex', justifyContent:'space-between' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={()=>{router.push(`/profile/${userData.user.email}`)}}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={()=>{router.push(`/profile/${userData.email}`)}}>
                                     <Icon icon="user" />
-                                    {userData.user.profileName? (
+                                    {userData.profileName? (
                                         <span style={{ fontWeight: 700 }}>{userData.profileName}</span>
                                         ) : (
                                             <span style={{ fontWeight: 700 }}>{userData.email}</span>
@@ -144,7 +152,10 @@ export const getServerSideProps = async(context)=>{
     const {id}  =  context.params;
     const {req} = context
     const postResponse = await getPostById(req,id);
+    
     const post = postResponse.post;
+    console.log("POST FROM SERVERSIDEPROPS : ", post)
+    
     return{
         props:{
             post:post,

@@ -71,6 +71,7 @@ import "rangy/lib/rangy-highlighter";
   
   
   const MarkdownWithOverlay = ({ markdownContent,user,postId, highlights }) => {
+    console.log("from md overlay ",highlights)
     
     const [highlightedText,setHighlightedText] = useState('')
     const [selectedTexttwo, setSelectedTexttwo] = useState('');
@@ -83,8 +84,13 @@ import "rangy/lib/rangy-highlighter";
   
     const serializedHighlightedDataRef = useRef(highlights?.highlightedText ?? "")
     useEffect(()=>{
+        if(highlights && !serializedHighlightedDataRef.current){
+          serializedHighlightedDataRef.current = highlights.highlightedText
+        }
+        console.log("the current value is ", serializedHighlightedDataRef.current )
         init();
         const highlighter = rangy.createHighlighter();
+       
         highlighter.addClassApplier(
           rangy.createClassApplier(highStyles.highlight, {
             ignoreWhiteSpace: true,
@@ -95,8 +101,10 @@ import "rangy/lib/rangy-highlighter";
         highlighterRef.current = highlighter;
         console.log("hehehhehhehhehhehhehhehheh",highlights)
         if(serializedHighlightedDataRef.current){
+          console.log("From if case ", serializedHighlightedDataRef.current)
+          
         highlighter.deserialize(serializedHighlightedDataRef.current )}
-    },[])
+    },[highlights])
 
 
 
