@@ -58,7 +58,7 @@ const toggleMenu = () => {
     return(
     <Navbar style={{zIndex:100,}}>
         <Navbar.Group align={Alignment.LEFT} >
-            <Navbar.Heading className={utilStyle.headingXl}  style={{fontSize:'3vh'}}onClick={()=>{router.push("/")}}>Why'sOnMyMind</Navbar.Heading>
+            <Navbar.Heading className={utilStyle.headingXl}  style={{fontSize:'3vh'}}onClick={()=>{router.push("/")}}>WhyOnM</Navbar.Heading>
             
             <Navbar.Divider />
            
