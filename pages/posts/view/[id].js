@@ -1,23 +1,16 @@
-import MarkdownWithOverlay from "@/utils/MdWithOverlay";
-import contentpagestyles from '../../styles/postpage.module.css';
-import NavBar from "@/components/Navbar";
-import { useState } from "react";
-import {user} from "@blueprintjs/icons";
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import { getPostById } from "@/post/lib/GetPost"
+import NavBar from "@/components/Navbar"
+import MarkdownWithOverlay from "@/utils/MdWithOverlay"
+import contentpagestyles from "../../../styles/postpage.module.css"
 import { Icon, Button, Divider , Tooltip, Classes} from "@blueprintjs/core";
-import { getAllPostsData } from "@/post/lib/GetAllPost";
- // Correct the import
- import { getPostById } from "@/post/lib/GetPost";
-import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
-import Cookies from "cookies";
-
-export default function Posts({ post,userData, isAuthenticated, isPostPinned, highlightedData }) {
-    // console.log(userData.user.profileName)
-    console.log("highhhhhhhhhhhhhhhhulllllllllllliiiiiiiiii ", userData)
+export default async function Posts({ post,id,  userData}){
     const router = useRouter()
-    
-    const [isPinned, setIspinned] = useState(isPostPinned)
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [highlights, setHighlights] = useState('')
+    const [isPinned, setIspinned] = useState(false)
     const togglePin = ()=>{
         if(!isPinned){
             console.log("post pinned")
@@ -27,19 +20,44 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
             setIspinned(false)
         }
     }
-    const getFillColor = () => {
-    return isPinned ? 'black' : 'none';
-  };
-    return (
+    useEffect(()=>{
+        const buckleUp = async ()=>{
+            const uri = process.env.backendUri+`api/post/get/highlight/${id}`;
+            const highlightedDataResponse = await fetch(uri,{credentials:'include'});
+            
+            
+            const isPinnedresponse = await fetch(process.env.backendUri+`api/post/ispinned/${id}`,{
+                credentials:'include'
+            })
+            if(highlightedDataResponse.status === 401){
+                setIsAuthenticated(false)
 
+            }else{
+            const highlightedData = await highlightedDataResponse.json()
+            setHighlights(highlightedData.highlights)
+            const pinnedIs = await isPinnedresponse.json()
+            setIspinned(pinnedIs)
+            setIsAuthenticated(true)
+            }
+
+
+
+
+        }
+        buckleUp();
+    
+
+
+    },[id])
+    return(
         <>
         <NextSeo
             title={post.title || "Read Post"}
             description={post.description}
         />
-            <NavBar />
-            <div className={contentpagestyles.pagecontainer}>
-            {
+         <NavBar />
+         <div className={contentpagestyles.pagecontainer}>
+         {
             isAuthenticated ? (
                     <>
                         
@@ -48,9 +66,9 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={()=>{router.push(`/profile/${userData.user.email}`)}}>
                                     <Icon icon="user" />
                                     {userData.user.profileName? (
-                                        <span style={{ fontWeight: 700 }}>{userData.user.profileName}</span>
+                                        <span style={{ fontWeight: 700 }}>{userData.profileName}</span>
                                         ) : (
-                                            <span style={{ fontWeight: 700 }}>{userData.user.email}</span>
+                                            <span style={{ fontWeight: 700 }}>{userData.email}</span>
                                         )
                                     }
                                    
@@ -65,19 +83,19 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
 
                             </div>
                             <Divider/>
-                            <MarkdownWithOverlay markdownContent={post.content} postId={post._id} highlights={highlightedData} />
+                            <MarkdownWithOverlay markdownContent={post.content} postId={post._id} highlights={highlights} />
                         </div>
                     </>
                 ) : (
                     <div className={contentpagestyles.contentcontainer}
                     >
                          <div style={{ padding: '2%', display:'flex', justifyContent:'space-between' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={()=>{router.push(`/profile/${userData.user.email}`)}}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={()=>{router.push(`/profile/${userData.email}`)}}>
                                     <Icon icon="user" />
-                                    {userData.user.profileName? (
-                                        <span style={{ fontWeight: 700 }}>{userData.user.profileName}</span>
+                                    {userData.profileName? (
+                                        <span style={{ fontWeight: 700 }}>{userData.profileName}</span>
                                         ) : (
-                                            <span style={{ fontWeight: 700 }}>{userData.user.email}</span>
+                                            <span style={{ fontWeight: 700 }}>{userData.email}</span>
                                         )
                                     }
                                    
@@ -110,86 +128,32 @@ export default function Posts({ post,userData, isAuthenticated, isPostPinned, hi
                     </div>
                 )
                 }
-            </div>
+        </div>
+
+
         </>
-    );
+    )
+
+
+    
+
+    // const [allPosts, setAllPosts] = useState(pos)
+    // const [isPinned, setIspinned] = useState()
 }
-//we cant use this because we use getServerSideProps
-// export const getStaticPaths = async () => {
-//     const paths = await getAllPostsData();
-
-//     return {
-//         paths,
-//         fallback: false
-//     };
-// }
-
-export const getServerSideProps = async (context ) => {
-    const {id} = context.params
+export const getServerSideProps = async(context)=>{
+    const {id}  =  context.params;
     const {req} = context
-    const {res} = context
-    const cookies = new Cookies(req,res)
-   
-    const p = await getPostById(req,id);
-    let post 
-    if(p.isAuthenticated){
-        post = p.post.post
-     }else{post = p.post} // Correct the function name
-    let isPinnedByUser = false;
-    if (post.status === 401) {
-        console.log("please login");
-        
+    const postResponse = await getPostById(req,id);
+    const post = postResponse.post;
+    return{
+        props:{
+            post:post,
+            id:id,
+            
+            userData : postResponse.userData
+
+        }
     }
+    
 
-    const postUserId = post.user;
-    const postID = post._id;
-    console.log("USER ISISISISISISISISIS",postUserId)
-    const userDetailsResponse = await fetch(`https://whyonm-api.onrender.com/api/user/${postUserId._id}`,{credentials:'include', headers: {
-        Cookie: req.headers.cookie,
-      }})
-    let userData = await userDetailsResponse.json()
-   console.log("USER DATATATTATTA",userData)
-   
-    const response = await fetch(`https://whyonm-api.onrender.com/getuser`,{credentials:'include', headers: {
-        Cookie: req.headers.cookie,
-      }})
-      console.log("response s s code s s ",req.headers.cookie)
-      if (response.status === 401){
-        console.log("Ppppppppppsssssssssssssssssssttttttttttttttttt  ",post._id)
-        return{
-            props:{
-                post,
-                isAuthenticated:false,
-                userData: userData,
-            }
-        }
-
-      }
-    const data = await response.json()
-    // console.log(data.user.pinnedPost)
-    if(data.user.pinnedPost.includes(postID.trim())){
-        isPinnedByUser = true
-    }
-    console.log( p.post.userHighlighted[0])
-    console.log('response status',data)
-    if(response.status == 200){
-    return {
-        props: {
-            post,
-            userData: userData,
-            isAuthenticated:true,
-            isPostPinned:isPinnedByUser,
-            highlightedData : p.post.userHighlighted[0] || null
-        }
-    };}
-    else if(response.status == 401){
-        return{
-            redirect: {
-                destination: '/',
-                permanent: false, // Set to true if it's a permanent redirection
-            },
-        }
-
-       }
 }
-
