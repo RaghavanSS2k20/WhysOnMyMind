@@ -55,7 +55,7 @@ export async function getServerSideProps(context) {
     return {
       props:{
         allPosts:allPosts,
-        isAuthenticated:true
+        isAuthenticated:false
       }
     }
   }
