@@ -70,8 +70,8 @@ export async function getServerSideProps(context) {
   if(pinnedPostRes.status === 401){
     return {
       props:{
-        posts:allPosts,
-        
+        allPosts:allPosts,
+        isAuthenticated:false
       }
     }
   }
