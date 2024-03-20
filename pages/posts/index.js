@@ -1,11 +1,27 @@
 import Post from "@/components/Post";
 import NavBar from "@/components/Navbar";
 import { NextSeo } from "next-seo";
-
+import { useEffect, useState } from "react";
+import { BindLikedAndPinnedPosts } from "@/lib/post/postUtilFunction";
 // import testCookie from "@/components/auth/CookieTest";
 // import {cookies} from 'next/headers'
 import AllPostStyles from '../../styles/allpost.module.css'
-const AllPosts = ({allPosts, isAuthenticated})=>{
+const AllPosts = ({posts})=>{
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [allPosts, setAllPosts] = useState(posts)
+  useEffect(()=>{
+    const setUp = async ()=>{
+      const all = await BindLikedAndPinnedPosts(posts);
+      console.log("isAuthenticated ? ", all.isAuthenticated)
+      setAllPosts(all.allPosts)
+      
+      setIsAuthenticated(all.isAuthenticated)
+    }
+
+    setUp()
+
+  },[])
+  
   return (
     <>
      <NextSeo
@@ -54,49 +70,20 @@ export async function getServerSideProps(context) {
   if(pinnedPostRes.status === 401){
     return {
       props:{
-        allPosts:allPosts,
-        isAuthenticated:true
+        posts:allPosts,
+        
       }
     }
   }
-  const likedPostRes = await fetch("https://whyonm-api.onrender.com/api/user/get/liked",{credentials:'include',
-  headers: {
-    Cookie: req.headers.cookie,
-  }
-    })
-  
-  const userPinnedP = await pinnedPostRes.json();
-  let userLiked = await likedPostRes.json() 
-  
-  const userPinnedPosts = [...new Set(userPinnedP.pinned)];
-  userLiked = [...new Set(userLiked.post)]
+}
 
  
-  if(pinnedPostRes.ok && userPinnedPosts){
   
+
   
-    allPosts.forEach((post) => {
-      
-      post.isPinned = userPinnedPosts.includes(post._id.trim());
-    });
-  
-}
-if(likedPostRes.ok && userLiked){
-  allPosts.forEach((post)=>{
-    post.isLikedByUser = userLiked.includes(post._id.trim());
-    
-  })
-}
-  }
 
  
   // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      allPosts:allPosts,
-      isAuthenticated:true
-    },
-  }
+  
 }
 export default AllPosts

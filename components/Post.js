@@ -29,7 +29,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
     return post.clickUpImageSrc
   
   }
-  console.log(post.clickUpImageSrc)
+  console.log("from post component : ", isPostPinned)
   const router = useRouter()
 
   const [isPinned, setIspinned] = useState(isPostPinned||false)

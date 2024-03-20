@@ -1,5 +1,6 @@
 import Profile from "@/components/Profile"
 import NavBar from "@/components/Navbar"
+import { useEffect } from "react"
 export default function Me ({postedPosts, userData, draftedPosts}){
     
     return(
@@ -16,6 +17,7 @@ export const getServerSideProps = async (context)=>{
         Cookie: req.headers.cookie,
       },})
       if(!response.ok){
+        console.log("failed")
         return {
             notFound:true
         }
