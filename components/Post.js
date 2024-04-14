@@ -29,7 +29,9 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
     return post.clickUpImageSrc
   
   }
-  console.log("from post component : ", isPostPinned)
+  if(! post.user){
+    console.log(post._id)
+  }
   const router = useRouter()
 
   const [isPinned, setIspinned] = useState(isPostPinned||false)

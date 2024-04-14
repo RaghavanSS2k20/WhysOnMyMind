@@ -57,8 +57,9 @@ export async function getServerSideProps(context) {
     credentials:'include'})
  
   const posts = await res.json()
- 
+
   const allPosts = posts.posts
+  console.log("POSTSS",allPosts[0])
   if(req){
   const pinnedPostRes = await fetch(`https://whyonm-api.onrender.com/api/user/get/pinnedposts`,
   {credentials:'include',
@@ -70,7 +71,7 @@ export async function getServerSideProps(context) {
   if(pinnedPostRes.status === 401){
     return {
       props:{
-        allPosts:allPosts,
+        posts:allPosts,
         isAuthenticated:false
       }
     }
