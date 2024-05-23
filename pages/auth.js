@@ -14,14 +14,36 @@ const AuthPage = ()=>{
     const [isNewUser, setIsNewuser] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
     const combinedClasses = classNames(utilStyles.heading3Xl, AuthStyles.heading)
     const handleEmailchange = (event)=>{
-        setEmail(event.target.value)
+        const emailValue = event.target.value;
+        setEmail(emailValue);
+        const isDisabled = emailValue.trim() === '';
+        console.log("isDisabled : ", isDisabled)
+       setIsSubmitDisabled(isDisabled)
+        // setIsSubmitDisabled(emailValue.trim() === '' || password.trim() === ''); // Update disabled status
+        if(emailValue.trim() === ''){
+            setError("Heyy! Double check the email")
+        }else{
+            setError("")
+        }
     }
     const handlePasswordChange = (event)=>{
-        setPassword(event.target.value)
-    }
+        const passwordValue = event.target.value;
+        setPassword(passwordValue);
+        // setIsSubmitDisabled(email.trim() === '' || passwordValue.trim() === ''); // Update disabled status
+        const isDisabled = passwordValue.trim() === '';
+        console.log("isDisabled password : ", isDisabled)
+       setIsSubmitDisabled(isDisabled)
+        if( passwordValue.trim() === ''){
+            setError("Woahh, Empty password  cannot be a password")
+        }
+        else{
+            setError("")
+        }
+    };
     const resetForm = () => {
         setEmail('');
         setPassword('');
@@ -45,6 +67,7 @@ const AuthPage = ()=>{
                 setIsNewuser(true)
                 setShowPasswordsection(true)
             }
+           
             else{
                 setError('something went wrong')
 
@@ -104,11 +127,15 @@ const AuthPage = ()=>{
                     },
                     body:JSON.stringify(data)
                 })
+                console.log("ok?",response.ok)
                 if(response.ok){
                     router.back()
                 }
+                else if(response.status == 401){
+                    setError("Credentials failed to match")
+                }
                 else{
-                    setError("lgin failed ")
+                    setError("login failed try again later ")
                 }
             }catch(err){
                 setError("my dog stepped on a bee")
@@ -144,7 +171,7 @@ const AuthPage = ()=>{
                                 <div className={AuthStyles.formGroup}> {/* Replace styles with AuthStyles */}
                                 <p style={{color:'red'}}>{error}</p>
                                     <input type="email" id="email" name="email" placeholder="Your Email" onChange={handleEmailchange} />
-                                    <button className={AuthStyles.button} type="submit" onClick={navigate}> {loading ? "Loading..." : "Proceed"}</button>
+                                    <button className={AuthStyles.button} type="submit" onClick={navigate} disabled={isSubmitDisabled}> {loading ? "Loading..." : "Proceed"}</button>
                                 </div>
                                 {/* <div className={AuthStyles.formGroup}> 
                                 <label htmlFor="password">Password</label>
@@ -162,12 +189,13 @@ const AuthPage = ()=>{
                                      <div className={AuthStyles.formGroup}> {/* Replace styles with AuthStyles */}
                                 
                                      <h1 className={utilStyles.headingMd}>Welcome {email}</h1>
-                                     <input type="password" id="password" name="password" placeholder="Your New Password" onChange={handlePasswordChange} />
-                                     </div>
+                                     <input type="password" id="password" name="password" placeholder="Your New Password" onChange={handlePasswordChange} disabled={isSubmitDisabled}/>
                                      <div className={AuthStyles["button-group"]}>
-                                     <button className={AuthStyles.notyoubutton} onClick={resetForm}> Change email?</button>
-                                     <button className={AuthStyles.button} type="submit" onClick={handleAuthClick}> {loading ? "Loading..." : "Signup"}</button>
+                                     <div className={AuthStyles.notyoubutton} onClick={resetForm}> Change email?</div>
+                                     <button className={AuthStyles.button} type="submit" onClick={handleAuthClick} disabled={isSubmitDisabled}> {loading ? "Loading..." : "Signup"}</button>
                                      </div>
+                                     </div>
+                                     
                                      </>
                                     
                                     
@@ -177,11 +205,12 @@ const AuthPage = ()=>{
                                     <p style={{color:'red'}}>{error}</p>
                                         <h1 className={utilStyles.headingMd}>Welcome Back {email}</h1>
                                         <input type="password" id="password" name="password" placeholder="Your Password" onChange={handlePasswordChange} />
-                                        </div>
                                         <div className={AuthStyles["button-group"]}>   
-                                        <button className={AuthStyles.notyoubutton} onClick={resetForm}> Not You?</button>                       
+                                        <div className={AuthStyles.notyoubutton} onClick={resetForm}> Not You?</div>                       
                                         <button type="submit" className={AuthStyles.button} onClick={handleAuthClick}> {loading ? "Loading..." : "Login"}</button>
                                         </div>
+                                        </div>
+                                       
                                 </>
                                 )}
                                 
