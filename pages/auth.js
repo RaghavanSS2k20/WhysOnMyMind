@@ -1,5 +1,6 @@
 import AuthStyles from "../styles/authpage.module.css"
 import utilStyles from "../styles/utils.module.css"
+import classNames from 'classnames';
 import { useState } from "react"
 import { useRouter } from "next/router"
 import { ButtonGroup,Button, FormGroup } from "@blueprintjs/core"
@@ -13,12 +14,22 @@ const AuthPage = ()=>{
     const [isNewUser, setIsNewuser] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const combinedClasses = classNames(utilStyles.heading3Xl, AuthStyles.heading)
     const handleEmailchange = (event)=>{
         setEmail(event.target.value)
     }
     const handlePasswordChange = (event)=>{
         setPassword(event.target.value)
     }
+    const resetForm = () => {
+        setEmail('');
+        setPassword('');
+        setShowPasswordsection(false);
+        setIsNewuser(false);
+        setError('');
+        setLoading(false);
+    };
     const navigate = async (e)=>{
         setLoading(true)
         e.preventDefault()
@@ -112,7 +123,7 @@ const AuthPage = ()=>{
         <div className={AuthStyles.container}>
             <div className={AuthStyles.content}>
                 <div style={{alignSelf:"center"}}>
-                    <div className={utilStyles.heading3Xl} style={{borderBottom:'2px solid black'}}>
+                    <div className={combinedClasses}>
                         WhyOnM.com
 
                     </div>
@@ -121,30 +132,28 @@ const AuthPage = ()=>{
                     Write, Explore, and <span className={AuthStyles.highlightanimate}> Highlight Your World </span>"
                     </div>
                 </div>
-                <div style={{width:'50%'}}>
+                <div >
                     <div className={AuthStyles.loginsection}>
-                        <p className={utilStyles.headingXl}>Login</p>
-                        <div className={AuthStyles.oauthgroup}>
-                            <div><GithubOauthSVGComponent size="20px"/></div>
-                                
-                             <div><GoogleOAuthSVGComponent size="20px"/></div>
-                              <div>  <LinkedInSVGComponent size="20px"/></div>
-                        </div>
-                        <p>OR</p>
+                        <p className={utilStyles.headingXl}>Join us</p>
+                       
                         {}
                         <div className={AuthStyles.formContainer}> {/* Replace styles with AuthStyles */}
                         {!showPasswordSection?(
                             <form className={AuthStyles.loginForm}> {/* Replace styles with AuthStyles */}
                                 
                                 <div className={AuthStyles.formGroup}> {/* Replace styles with AuthStyles */}
-                               <p style={{color:'red'}}>{error}</p>
-                                <input type="email" id="email" name="email" placeholder="Your Email" onChange={handleEmailchange} />
+                                <p style={{color:'red'}}>{error}</p>
+                                    <input type="email" id="email" name="email" placeholder="Your Email" onChange={handleEmailchange} />
+                                    <button className={AuthStyles.button} type="submit" onClick={navigate}> {loading ? "Loading..." : "Proceed"}</button>
                                 </div>
                                 {/* <div className={AuthStyles.formGroup}> 
                                 <label htmlFor="password">Password</label>
                                 <input type="password" id="password" name="password" placeholder="Your Password" />
                                 </div> */}
-                                <button type="submit" onClick={navigate}>proceed</button>
+                                
+                                
+                                 
+                                
                             </form>
                         ):(
                              <form className={AuthStyles.loginForm}> {/* Replace styles with AuthStyles */}
@@ -155,8 +164,10 @@ const AuthPage = ()=>{
                                      <h1 className={utilStyles.headingMd}>Welcome {email}</h1>
                                      <input type="password" id="password" name="password" placeholder="Your New Password" onChange={handlePasswordChange} />
                                      </div>
-                                    
+                                     <div className={AuthStyles["button-group"]}>
+                                     <button className={AuthStyles.notyoubutton} onClick={resetForm}> Not You?</button>
                                      <button className={AuthStyles.button} type="submit" onClick={handleAuthClick}> {loading ? "Loading..." : "Signup"}</button>
+                                     </div>
                                      </>
                                     
                                     
