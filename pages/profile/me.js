@@ -12,11 +12,9 @@ export default function Me() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://whyonm-api.onrender.com/api/user/get/current', {
+        const response = await fetch(process.env.backendUrl+`api/user/get/current`, {
           credentials: 'include',
-          headers: {
-            Cookie: document.cookie,
-          },
+         
         });
 
         if (!response.ok) {
