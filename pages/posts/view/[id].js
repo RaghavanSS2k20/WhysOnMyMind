@@ -154,7 +154,7 @@ export const getServerSideProps = async(context)=>{
     const postResponse = await getPostById(req,id);
     
     const post = postResponse.post;
-    console.log("POST FROM SERVERSIDEPROPS : ", post)
+    console.log("POST FROM SERVERSIDEPROPS : ", postResponse)
     
     return{
         props:{

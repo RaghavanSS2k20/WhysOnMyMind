@@ -1,81 +1,75 @@
-import Profile from "@/components/Profile"
-import NavBar from "@/components/Navbar"
-import { useEffect } from "react"
-export default function Me ({postedPosts, userData, draftedPosts}){
-    
-    return(
-        <>
-        <NavBar/>
-        <Profile draftedPosts={draftedPosts} postedPosts={postedPosts} userData={userData} isMe={true}/>
+import { useEffect, useState } from "react";
+import Profile from "@/components/Profile";
+import NavBar from "@/components/Navbar";
 
-        </>
-    )
-}
-export const getServerSideProps = async (context)=>{
-    const {req} = context
-    const response = await fetch('https://whyonm-api.onrender.com/api/user/get/current',{ credentials:'include', headers: {
-        Cookie: req.headers.cookie,
-      },})
-      if(!response.ok){
-        console.log("failed")
-        return {
-            notFound:true
-        }
-        }
-    const data = await response.json()
-    const user =data.user
-    const userPosts = user.posts
-    let isPostAvailable = true
-    let postedPosts = []
-    let draftedPosts = []
-    if(!userPosts){
-        isPostAvailable = false;
-    }else{
-        postedPosts = userPosts.filter(post=>post.status==="POSTED")
-        
-        draftedPosts=userPosts.filter(post=>post.status==="DRAFT")
+export default function Me() {
+  const [postedPosts, setPostedPosts] = useState([]);
+  const [draftedPosts, setDraftedPosts] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    }
-  //   const pinnedPostRes = await fetch(`https://whyonm-api.onrender.com/api/user/get/pinnedposts`,
-  // {credentials:'include',
-  // headers: {
-  //   Cookie: req.headers.cookie,
-  // }
-  //   }
-  // )
-  console.log("DraftetstaDVH POSOSOOSOOSOOS",draftedPosts)
-  
-    const userPinnedP = user.pinnedPost
-
-    
-    let userLiked = user.likedPost 
-    
-    const userPinnedPosts = [...new Set(userPinnedP)];
-    console.log(userPinnedPosts)
-    userLiked = [...new Set(userLiked)]
-    if(userPinnedPosts){
-  
-  
-        postedPosts.forEach((post) => {
-          
-          post.isPinned = userPinnedPosts.includes(post._id.trim());
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://whyonm-api.onrender.com/api/user/get/current', {
+          credentials: 'include',
+          headers: {
+            Cookie: document.cookie,
+          },
         });
-      
-    }
-    if( userLiked){
-      postedPosts.forEach((post)=>{
-        post.isLikedByUser = userLiked.includes(post._id.trim());
-      })
-    }
-   
-    return {
-        props:{
-            postedPosts:postedPosts,
-            userData:user,
-            draftedPosts:draftedPosts
+
+        if (!response.ok) {
+          // throw new Error('Failed to fetch user data');
+          console.error("Error while fetch : ", response.status)
+          setError("Backend isnt active Yet")
         }
-    }
 
-      
+        const data = await response.json();
+        const user = data.user;
+        const userPosts = user.posts || [];
+        const postedPosts = userPosts.filter(post => post.status === "POSTED");
+        const draftedPosts = userPosts.filter(post => post.status === "DRAFT");
 
+        const userPinnedPosts = [...new Set(user.pinnedPost)];
+        const userLiked = [...new Set(user.likedPost)];
+
+        postedPosts.forEach(post => {
+          post.isPinned = userPinnedPosts.includes(post._id.trim());
+          post.isLikedByUser = userLiked.includes(post._id.trim());
+        });
+
+        setPostedPosts(postedPosts);
+        setDraftedPosts(draftedPosts);
+        setUserData(user);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+        setError(error.message);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <>
+      <NavBar />
+      <Profile
+        draftedPosts={draftedPosts}
+        postedPosts={postedPosts}
+        userData={userData}
+        isMe={true}
+      />
+    </>
+  );
 }
