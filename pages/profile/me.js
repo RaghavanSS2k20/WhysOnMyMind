@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Profile from "@/components/Profile";
 import NavBar from "@/components/Navbar";
-
+import { NextSeo } from "next-seo";
 export default function Me() {
   const [postedPosts, setPostedPosts] = useState([]);
   const [draftedPosts, setDraftedPosts] = useState([]);
