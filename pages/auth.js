@@ -165,7 +165,7 @@ const AuthPage = ()=>{
                                      <input type="password" id="password" name="password" placeholder="Your New Password" onChange={handlePasswordChange} />
                                      </div>
                                      <div className={AuthStyles["button-group"]}>
-                                     <button className={AuthStyles.notyoubutton} onClick={resetForm}> Not You?</button>
+                                     <button className={AuthStyles.notyoubutton} onClick={resetForm}> Change email?</button>
                                      <button className={AuthStyles.button} type="submit" onClick={handleAuthClick}> {loading ? "Loading..." : "Signup"}</button>
                                      </div>
                                      </>
@@ -178,8 +178,10 @@ const AuthPage = ()=>{
                                         <h1 className={utilStyles.headingMd}>Welcome Back {email}</h1>
                                         <input type="password" id="password" name="password" placeholder="Your Password" onChange={handlePasswordChange} />
                                         </div>
-                                    
+                                        <div className={AuthStyles["button-group"]}>   
+                                        <button className={AuthStyles.notyoubutton} onClick={resetForm}> Not You?</button>                       
                                         <button type="submit" className={AuthStyles.button} onClick={handleAuthClick}> {loading ? "Loading..." : "Login"}</button>
+                                        </div>
                                 </>
                                 )}
                                 
