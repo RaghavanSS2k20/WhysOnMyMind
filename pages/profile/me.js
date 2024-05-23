@@ -25,6 +25,7 @@ export default function Me() {
 
         const data = await response.json();
         const user = data.user;
+        console.log("The User is : ", user)
         const userPosts = user.posts || [];
         const postedPosts = userPosts.filter(post => post.status === "POSTED");
         const draftedPosts = userPosts.filter(post => post.status === "DRAFT");
@@ -58,9 +59,13 @@ export default function Me() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+  const title = userData.profileName ? `@${userData.profileName}` : `@${userData.email}`;
   return (
     <>
+    <NextSeo 
+    title={title}
+    description = {userData.bio}
+    ></NextSeo>
       <NavBar />
       <Profile
         draftedPosts={draftedPosts}
