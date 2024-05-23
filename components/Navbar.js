@@ -70,8 +70,8 @@ const toggleMenu = () => {
                 content={
                   <Menu>
                     <MenuItem onClick={()=>{router.push('/profile/me')}}   text={userEmail}className={utilStyle.menuheading}></MenuItem>
-                    <MenuItem icon="manually-entered-data"  text="write" />
-                    <MenuItem icon="manual" text="Read" />
+                    <MenuItem onClick={()=>{router.push('/write')}} icon="manually-entered-data"  text="write" />
+                    <MenuItem onClick={()=>{router.push('/posts')}} icon="manual" text="Read" />
                     <MenuItem icon={<PinBoardSVGComponent size="15x"/>} text="Pin Board" onClick={()=>{router.push("/pinboard")}} />
                     <MenuDivider />
                     <MenuItem text="logout" icon="log-out" onClick={HandleLogout} className={utilStyle.menusubheading}>
