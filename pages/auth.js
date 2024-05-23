@@ -12,6 +12,7 @@ const AuthPage = ()=>{
     const [isSignIn,setIsSignIn] = useState(true)
     const [isNewUser, setIsNewuser] = useState(false)
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
     const handleEmailchange = (event)=>{
         setEmail(event.target.value)
     }
@@ -19,6 +20,7 @@ const AuthPage = ()=>{
         setPassword(event.target.value)
     }
     const navigate = async (e)=>{
+        setLoading(true)
         e.preventDefault()
         try{
             const uri = process.env.backendUrl+`api/user/get/email/${email}`
@@ -39,9 +41,13 @@ const AuthPage = ()=>{
         }catch(er){
             setError("terribly stepped on some thing")
         }
+        finally{
+            setLoading(false)
+        }
         
     }
     const handleAuthClick = async (event)=>{
+        setLoading(true)
         event.preventDefault()
         if(isNewUser){
             try{
@@ -67,8 +73,12 @@ const AuthPage = ()=>{
         }catch(err){
             setError("my dog stepped on a bee")
         }
+        finally{
+            setLoading(false)
+        }
 
         }else{
+            
             try{
                 const uri = process.env.backendUrl + 'login'
                 const data = {
@@ -91,6 +101,9 @@ const AuthPage = ()=>{
                 }
             }catch(err){
                 setError("my dog stepped on a bee")
+            }
+            finally{
+                setLoading(false)
             }
 
         }
@@ -143,7 +156,7 @@ const AuthPage = ()=>{
                                      <input type="password" id="password" name="password" placeholder="Your New Password" onChange={handlePasswordChange} />
                                      </div>
                                     
-                                     <button type="submit" onClick={handleAuthClick}>Signup</button>
+                                     <button className={AuthStyles.button} type="submit" onClick={handleAuthClick}> {loading ? "Loading..." : "Signup"}</button>
                                      </>
                                     
                                     
@@ -155,7 +168,7 @@ const AuthPage = ()=>{
                                         <input type="password" id="password" name="password" placeholder="Your Password" onChange={handlePasswordChange} />
                                         </div>
                                     
-                                        <button type="submit" onClick={handleAuthClick}>Login</button>
+                                        <button type="submit" className={AuthStyles.button} onClick={handleAuthClick}> {loading ? "Loading..." : "Login"}</button>
                                 </>
                                 )}
                                 

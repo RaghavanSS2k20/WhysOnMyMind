@@ -90,6 +90,25 @@ color: black;
   .formGroup {
     margin: 10px 0;
   }
+  .button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #333;
+    transform: scale(1.05);
+  }
+  
+  .button:active {
+    background-color: #111;
+  }
   
   .formGroup label {
     display: block;

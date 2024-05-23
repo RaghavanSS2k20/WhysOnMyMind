@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Profile from "@/components/Profile";
 import NavBar from "@/components/Navbar";
+import WhysOnMyMindLoader from "@/components/WhysOnMyMindLoader";
 import { NextSeo } from "next-seo";
 export default function Me() {
   const [postedPosts, setPostedPosts] = useState([]);
@@ -53,7 +54,7 @@ export default function Me() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <WhysOnMyMindLoader/>;
   }
 
   if (error) {
