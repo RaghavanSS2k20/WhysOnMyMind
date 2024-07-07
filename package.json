@@ -39,6 +39,7 @@
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.7",
     "react-selection-popup": "^0.4.7",
+    "resend": "^3.4.0",
     "styled-components": "^6.0.8"
   }
 }

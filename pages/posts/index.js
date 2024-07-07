@@ -55,7 +55,7 @@ export async function getServerSideProps(context) {
   // Fetch your posts data
   const res = await fetch('https://whyonm-api.onrender.com/api/post/',{
     credentials:'include'})
- 
+  console.log(res.status)
   const posts = await res.json()
 
   const allPosts = posts.posts

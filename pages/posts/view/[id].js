@@ -27,7 +27,7 @@ export default function Posts({ post,id,  userData}){
             const uri = process.env.backendUrl+`api/post/get/highlight/${id.trim()}`;
             console.log(uri)
             const highlightedDataResponse = await fetch(uri,{credentials:'include'});
-            
+            console.log("Response for Highlights Here : ",highlightedDataResponse.status)
             
             const isPinnedresponse = await fetch(process.env.backendUrl+`api/post/ispinned/${id}`,{
                 credentials:'include'

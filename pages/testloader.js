@@ -1,26 +1,11 @@
 import { useEffect, useState } from "react";
-
+import WhysOnMyMindLoader from "@/components/WhysOnMyMindLoader";
 const testAuth = ()=>{
-  const [user, setUser] = useState('')
-  useEffect(()=>{
-    const getuser =  async ()=>{
-        
-    
-    try{
-      const resposne = await fetch("https://whyonm-api.onrender.com/getuser",{credentials:'include'});
-      const data  = await resposne.json()
-      setUser(data.user.email || "poda punda")
-      
-     
-
-    }catch(e){
-      console.log('error in fetching data',e)
-    }
-  }
-  getuser()
-  },[])
   return(
-    <>{user}</>
+    <WhysOnMyMindLoader>
+      
+    </WhysOnMyMindLoader>
   )
+  
 }
 export default testAuth

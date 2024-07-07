@@ -21,7 +21,9 @@ module.exports = removeImports()({
     styledComponents: true
   },
   env:{
-    backendUrl:process.env.BACKEND_URL
+    backendUrl:process.env.BACKEND_URL,
+    resenderApiKey:process.env.RESENDER_API_KEY,
+    resenderMailId:process.env.RESENDER_MAILID
 
   },
   // ✅  options...

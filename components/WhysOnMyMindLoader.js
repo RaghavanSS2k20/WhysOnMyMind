@@ -18,6 +18,12 @@ const WhysOnMyMindLoader = ()=>{
                                                                   
 `}
         </pre>
+        <div className={loaderStyles.footnote}>
+                WhyOnM Server has been hosted on Free tier of Onrender!!
+                Inactivity spins it Down!!
+
+            </div>
+        
         </div>
     )
 }
