@@ -43,7 +43,7 @@
     color: gray;
     /* justify-self: flex-end; */
     position: absolute; /* Position the footnote absolutely */
-  bottom: 1rem; /* Position it at the bottom */
+  bottom: 2rem; /* Position it at the bottom */
   width: 100%; /* Full width */
   text-align: center; /* Center the text */
 
