@@ -4,7 +4,7 @@ export async function  getPostById(req,id){
     
     console.log(id)
     try{
-        const response = await fetch(`https://whyonm-api.onrender.com/api/post/${id}`,{ credentials:'include', headers: {
+        const response = await fetch(`https://whysonmymind-backend-production.up.railway.app/api/post/${id}`,{ credentials:'include', headers: {
             Cookie: req.headers.cookie,
           },})
         
