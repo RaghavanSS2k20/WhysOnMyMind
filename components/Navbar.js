@@ -22,7 +22,7 @@ const toggleMenu = () => {
       });
       const data = await response.json()
       if(response.ok){
-        console.log('logout success')
+        console.log('logout success!')
         router.push('/')
         
         
