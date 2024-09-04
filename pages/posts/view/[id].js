@@ -23,7 +23,7 @@ export default function Posts({ post,id,  userData}){
     }
     useEffect(()=>{
         const buckleUp = async ()=>{
-           console.log("The requested post id is : ", id)
+           console.log("The requested post id is : ", process.env.backendUrl)
             const uri = process.env.backendUrl+`api/post/get/highlight/${id.trim()}`;
             console.log(uri)
             const highlightedDataResponse = await fetch(uri,{credentials:'include'});

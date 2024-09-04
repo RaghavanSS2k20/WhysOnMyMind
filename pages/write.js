@@ -133,7 +133,7 @@ function Edit() {
     var bostID = NewPostId;
     if(isNewPostNeeded){
       console.log('new post will be created')
-      const response = await fetch("https://whysonmymind-backend-production.up.railway.app/api/post/create",
+      const response = await fetch("https://whyonm-api.onrender.com/api/post/create",
       {method:'POST', 
       headers: {
           'Content-Type': 'application/json' // Specify the content type
@@ -165,7 +165,7 @@ function Edit() {
     }
     console.log("bost is ",bostID)
     
-    const response = await fetch(`https://whysonmymind-backend-production.up.railway.app/api/post/update/content/${bostID}`,{  
+    const response = await fetch(`https://whyonm-api.onrender.com/api/post/update/content/${bostID}`,{  
       method:'PATCH',
       credentials: 'include',
       headers: {
@@ -238,7 +238,7 @@ function Edit() {
      // Reset content modification flag
   };
   const PostContent = async () =>{
-     const response = await fetch('https://whysonmymind-backend-production.up.railway.app/api/post/submit',{
+     const response = await fetch('https://whyonm-api.onrender.com/api/post/submit',{
       credentials:'include',
       method:'PATCH',
       headers: {
