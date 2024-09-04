@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
   // console.log("cookies are this da ",cookies.get('connect.sid')) 
   
   // Fetch your posts data
-  const res = await fetch('https://whyonm-api.onrender.com/api/post/',{
+  const res = await fetch('https://whysonmymind-backend-production.up.railway.app/',{
     credentials:'include'})
   console.log(res.status)
   const posts = await res.json()
