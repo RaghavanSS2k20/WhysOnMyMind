@@ -210,7 +210,7 @@ function Edit() {
     const formData = new FormData();
     formData.append("image", file);
 
-    fetch(process.env.imageHandler+"/upload", {
+    fetch(process.env.imageHandler+"upload", {
       method: "POST",
       body: formData,
     })
