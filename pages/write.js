@@ -210,7 +210,7 @@ function Edit() {
     const formData = new FormData();
     formData.append("image", file);
 
-    fetch("http://localhost:8081/upload", {
+    fetch(process.env.imageHandler+"/upload", {
       method: "POST",
       body: formData,
     })
@@ -279,7 +279,7 @@ function Edit() {
           formData.append('image', file);
   
           try {
-            const response = await fetch("http://localhost:8081/upload", {
+            const response = await fetch(process.env.imageHandler+"/upload", {
               method: 'POST',
               body: formData,
             });

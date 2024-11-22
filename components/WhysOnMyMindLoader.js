@@ -34,11 +34,14 @@ LLLLLLLLLLLLLLLLLLLLLLLL   ooooooooooo     aaaaaaaaaa  aaaa  ddddddddd   dddddii
                                                                                                            ggg::::::ggg    
                                                                                                               gggggg       
 
+
+
+                                                                                                              
                                                                   
 `}
         </pre>
         <div className={loaderStyles.footnote}>
-                WhyOnM Server has been hosted on Free tier of Onrender!!
+                Please wait Loading your content!,WhyOnM Server has been hosted on Free tier of Onrender!!
                 Inactivity spins it Down!!
 
             </div>

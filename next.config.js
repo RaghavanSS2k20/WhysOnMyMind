@@ -23,7 +23,8 @@ module.exports = removeImports()({
   env:{
     backendUrl:process.env.BACKEND_URL,
     resenderApiKey:process.env.RESENDER_API_KEY,
-    resenderMailId:process.env.RESENDER_MAILID
+    resenderMailId:process.env.RESENDER_MAILID,
+    imageHandler:process.env.IMAGE_HANDLER_URL
 
   },
   // ✅  options...
