@@ -56,7 +56,9 @@ const AuthPage = ()=>{
         setLoading(true)
         e.preventDefault()
         try{
+            
             const uri = process.env.backendUrl+`api/user/get/email/${email}`
+            console.log(uri)
             const response = await fetch(uri,{
                 credentials:'include'
             })
