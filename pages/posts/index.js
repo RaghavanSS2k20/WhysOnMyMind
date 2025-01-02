@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
   // console.log("cookies are this da ",cookies.get('connect.sid')) 
   
   // Fetch your posts data
-  const res = await fetch('https://whysonmymind-backend-production.up.railway.app/api/post/',{
+  const res = await fetch('https://whyonm-api.onrender.com/api/post/',{
     credentials:'include'})
   console.log(res.status)
   const posts = await res.json()
@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
   const allPosts = posts.posts
   console.log("POSTSS",allPosts[0])
   if(req){
-  const pinnedPostRes = await fetch(`https://whysonmymind-backend-production.up.railway.app/api/user/get/pinnedposts`,
+  const pinnedPostRes = await fetch(`https://whyonm-api.onrender.com/api/user/get/pinnedposts`,
   {credentials:'include',
   headers: {
     Cookie: req.headers.cookie,

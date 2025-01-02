@@ -3,7 +3,7 @@ const testCookies = ()=>{
   const [cookies, setCookies] = useState(null)
   useEffect(()=>{
     const petch = async ()=>{
-    const res = await fetch('https://whysonmymind-backend-production.up.railway.app/api/cookies',{
+    const res = await fetch('https://whyonm-api.onrender.com/api/cookies',{
       credentials:'include',
       // headers:{
       //   Cookie: req.headers.cookie,
@@ -25,7 +25,7 @@ petch()
 }
 // export async function getServerSideProps(context){
 //   const {req} = context
-//   const res = await fetch('https://whysonmymind-backend-production.up.railway.app/api/cookies',{
+//   const res = await fetch('https://whyonm-api.onrender.com/api/cookies',{
 //     credentials:'include',
 //     headers:{
 //       Cookie: req.headers.cookie,

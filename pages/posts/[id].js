@@ -144,13 +144,13 @@ export const getServerSideProps = async (context ) => {
     const postUserId = post.user;
     const postID = post._id;
     console.log("USER ISISISISISISISISIS",postUserId)
-    const userDetailsResponse = await fetch(`https://whysonmymind-backend-production.up.railway.app/api/user/${postUserId._id}`,{credentials:'include', headers: {
+    const userDetailsResponse = await fetch(`https://whyonm-api.onrender.com/api/user/${postUserId._id}`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
       }})
     let userData = await userDetailsResponse.json()
    console.log("USER DATATATTATTA",userData)
    
-    const response = await fetch(`https://whysonmymind-backend-production.up.railway.app/getuser`,{credentials:'include', headers: {
+    const response = await fetch(`https://whyonm-api.onrender.com/getuser`,{credentials:'include', headers: {
         Cookie: req.headers.cookie,
       }})
       console.log("response s s code s s ",req.headers.cookie)

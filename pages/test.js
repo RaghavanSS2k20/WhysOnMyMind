@@ -42,7 +42,7 @@ export default function HighlightDemo() {
     //     tagNames: ["mark"]
     //   })
     // );
-    const response = await fetch("https://whysonmymind-backend-production.up.railway.app/write",{  credentials: 'include', }); // Fetch from your Express API route
+    const response = await fetch("https://whyonm-api.onrender.com/write",{  credentials: 'include', }); // Fetch from your Express API route
     const data = await response.json();
     
     highlighter.highlightSelection(highStyles.highlight);

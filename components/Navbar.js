@@ -16,7 +16,7 @@ const toggleMenu = () => {
   };
   const HandleLogout= async ()=>{
     try{
-      const response = await fetch("https://whysonmymind-backend-production.up.railway.app/logout",{
+      const response = await fetch("https://whyonm-api.onrender.com/logout",{
         credentials:'include',
         method:'DELETE'
       });
@@ -38,7 +38,7 @@ const toggleMenu = () => {
   useEffect(()=>{
     const fetchUser = async ()=>{
       try{
-        const resposne = await fetch("https://whysonmymind-backend-production.up.railway.app/getuser",{credentials:'include'});
+        const resposne = await fetch("https://whyonm-api.onrender.com/getuser",{credentials:'include'});
         const data = await resposne.json()
         if(data){
          // console.log("dddddddddddadaaaaaaaaaaaaaaaaaatttttttttttttttttttttttttttttttttaaaaaaaaaaaaaaaaaaaaaaaaaaaa",data.user)

@@ -36,7 +36,7 @@ export default function All({allPosts}){
 export async function getStaticProps() {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
-    const res = await fetch('https://whysonmymind-backend-production.up.railway.app/api/post/',{credentials:'include'})
+    const res = await fetch('https://whyonm-api.onrender.com/api/post/',{credentials:'include'})
     console.log("Rsult is here!!!")
     const posts = await res.json()
     console.log(posts)

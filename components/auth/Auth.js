@@ -24,7 +24,7 @@ const AuthOverlay = (props) =>{
      const [isOpened, setIsOpened] = useState(props.isOpen)
 
     const HandleLoginSubmit = (props)=>{
-        const url = 'https://whysonmymind-backend-production.up.railway.app/login'
+        const url = 'https://whyonm-api.onrender.com/login'
         console.log("props : ",props)
         const data={
             "email":props.email,
@@ -59,7 +59,7 @@ const AuthOverlay = (props) =>{
         
     }
     const SignInSubmit = (props)=>{
-        const url = 'https://whysonmymind-backend-production.up.railway.app/register'; // Updated URL
+        const url = 'https://whyonm-api.onrender.com/register'; // Updated URL
         const data = {
             email: props.email,
             password: props.password

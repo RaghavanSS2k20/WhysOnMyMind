@@ -46,7 +46,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
         console.log("post pinned")
           setIspinned(true)
         try{
-            const response  = await fetch("https://whysonmymind-backend-production.up.railway.app/api/user/pinpost",{
+            const response  = await fetch("https://whyonm-api.onrender.com/api/user/pinpost",{
                 credentials:'include'
                 ,method:'PATCH',
                 headers: {
@@ -66,7 +66,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
           console.log("post unpinned")
           setIspinned(false)
           try{
-            const response  = await fetch("https://whysonmymind-backend-production.up.railway.app/api/user/unpinpost",{
+            const response  = await fetch("https://whyonm-api.onrender.com/api/user/unpinpost",{
                 credentials:'include'
                 ,method:'PATCH',
                 headers: {
@@ -92,7 +92,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
       setIsLiked(true)
       console.log('post is liked')
       try{
-        const response  = await fetch("https://whysonmymind-backend-production.up.railway.app/api/user/like",{
+        const response  = await fetch("https://whyonm-api.onrender.com/api/user/like",{
             credentials:'include'
             ,method:'PATCH',
             headers: {
@@ -111,7 +111,7 @@ export default function Post({post, isPostPinned, isPostLikedByUser}){
       console.log("post unlikded")
       setIsLiked(false)
       try{
-        const response  = await fetch("https://whysonmymind-backend-production.up.railway.app/api/user/unlike",{
+        const response  = await fetch("https://whyonm-api.onrender.com/api/user/unlike",{
             credentials:'include'
             ,method:'PATCH',
             headers: {
