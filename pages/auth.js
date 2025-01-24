@@ -153,7 +153,7 @@ const AuthPage = ()=>{
             <div className={AuthStyles.content}>
                 <div style={{alignSelf:"center"}}>
                     <div className={combinedClasses}>
-                        WhyOnM.com
+                        WhyOnM
 
                     </div>
                     <div className={utilStyles.headingLg}>
