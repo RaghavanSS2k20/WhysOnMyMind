@@ -8,6 +8,7 @@ import "rangy/lib/rangy-highlighter";
   import '@blueprintjs/core/lib/css/blueprint.css';
   import { Popover, Button, Classes } from '@blueprintjs/core';
   import { Highlight } from '@blueprintjs/icons';
+  import { GoogleSVGComponent } from '@/assets/icons/Icons';
   import { handle_highlight_preserve } from './HandleHighlightPreserve';
   function init(){
     console.log("ramgy called")
@@ -97,7 +98,13 @@ import "rangy/lib/rangy-highlighter";
             elementTagName: "mark",
             tagNames: ["mark"]
           })
+         
         );
+        highlighter.addClassApplier( rangy.createClassApplier(highStyles.plain, {
+          ignoreWhiteSpace: true,
+          elementTagName: "mark",
+          tagNames: ["mark"]
+        }))
         highlighterRef.current = highlighter;
         console.log("hehehhehhehhehhehhehhehheh",highlights)
         if(serializedHighlightedDataRef.current){
@@ -109,6 +116,19 @@ import "rangy/lib/rangy-highlighter";
 
 
 
+    const handleGoogleSearchHighlight = useCallback(()=>{
+      const hl =  highlighterRef.current
+      console.log(hl)
+      hl.highlightSelection(highStyles.plain);
+      console.log(hl.highlights)
+      const highlightedTexts = hl.highlights.map((h) => h.getText())
+      console.log("Getting texts : ", highlightedTexts)
+      const searchQuery = highlightedTexts[highlightedTexts.length - 1];
+      const googleSearchURL = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+      window.open(googleSearchURL, "_blank");
+
+
+    })
     const handleSaveHighlight = useCallback(async () => {
       const highlighter =  highlighterRef.current
       
@@ -394,24 +414,20 @@ import "rangy/lib/rangy-highlighter";
             }}
           >
             
-              <div style={{ padding: '10%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems:'center' }}>
                   <Button
 
                     icon={<Highlight size={16} color='white' />}
                     style={{ padding: '2%', margin: '2%', width: 'fit-content', border:'none' , background:'inherit'}}
                     onClick={() => {handleSaveHighlight();setIsPopoverOpen(false)}}
                   />
-                  <Button
-                    style={{ padding: '2%', margin: '2%',border:'none' , background:'inherit' }}
-                    icon={<Highlight size={16} color='white' />}
-                    onClick={() =>{ handleRemoveHighlight(); setIsPopoverOpen(false)}}
-                  />
-                  {/* reconstructHighlight(highlightData); */}
-                  <Button
-                    style={{ padding: '2%', margin: '2%',border:'none' , background:'inherit' }}
-                    icon={<Highlight size={16} color='white' />}
-                    onClick={() =>{reconstructHighlight(highlightData); }}
-                  />
+                   <Button
+
+                      icon={<GoogleSVGComponent size={16} color='white' />}
+                      style={{ padding: '2%', margin: '2%', width: 'fit-content', border:'none' , background:'inherit'}}
+                      onClick={() => {handleGoogleSearchHighlight();setIsPopoverOpen(false)}}
+                    />
+                                      
                 </div>
                 </div>
             </Popover>

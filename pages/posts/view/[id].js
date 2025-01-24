@@ -38,7 +38,7 @@ export default function Posts({ post,id,  userData}){
             }else{
             console.log("response status for highlighted fetch : ", highlightedDataResponse.status)
             const highlightedData = await highlightedDataResponse.json()
-            console.log(highlightedData.highlights[0].highlightedText)
+            console.log(highlightedData.highlights[0]?.highlightedText)
             setHighlights(highlightedData.highlights[0])
             const pinnedIs = await isPinnedresponse.json()
             console.log("IIIIIIISSSSSSSSSSSSSSSSSSSSSSSS PPPPPPPPPPPPPPPPPPIIIIIIISSSSSSSSSSSSMNNn",pinnedIs.isPinned)

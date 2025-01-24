@@ -4,3 +4,8 @@
     padding: 2px; /* Optional padding to give some space around the highlighted text */
     /* You can add more styles as needed, such as border-radius, box-shadow, etc. */
   }
+
+.plain{
+  color: #1c2127;
+  background: none;
+}
